@@ -8,7 +8,7 @@ license     = "MIT"
 name        = "mago_fmt"
 readme      = "README.md"
 repository  = "https://github.com/wasm-fmt/mago_fmt"
-version     = "0.1.0"
+version     = "0.1.1"
 
 [dependencies]
 mago-formatter   = "0.26.1"
