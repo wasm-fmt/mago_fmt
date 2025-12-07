@@ -1,0 +1,44 @@
+[package]
+authors     = ["magic-akari <akari.ccino@gmail.com>"]
+description = "A WASM based PHP Formatter"
+edition     = "2024"
+homepage    = "https://github.com/wasm-fmt/mago_fmt"
+keywords    = ["wasm", "mago", "PHP", "formatter"]
+license     = "MIT"
+name        = "mago_fmt"
+readme      = "README.md"
+repository  = "https://github.com/wasm-fmt/mago_fmt"
+version     = "0.0.0"
+
+[dependencies]
+mago-formatter   = "0.26.1"
+mago-interner    = "0.26.1"
+mago-php-version = "0.26.1"
+
+serde-wasm-bindgen = "0.6"
+wasm-bindgen       = "0.2"
+
+    [package.metadata.wasm-pack.profile.release]
+    wasm-opt = [
+        "-Os",
+        "--enable-bulk-memory",
+        "--enable-nontrapping-float-to-int",
+    ]
+
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dev-dependencies]
+mago-formatter    = "0.26.1"
+mago-php-version  = "0.26.1"
+pretty_assertions = "1"
+
+
+[profile.release]
+codegen-units = 1
+debug         = false     # set to `true` for debug information
+lto           = true
+opt-level     = "s"
+panic         = "abort"   # Let it crash and force ourselves to write safe Rust.
+strip         = "symbols" # set to `false` for debug information

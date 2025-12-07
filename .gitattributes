@@ -1,0 +1,8 @@
+* text=auto
+
+*.js linguist-detectable=false
+*.ts linguist-detectable=false
+*.mjs linguist-detectable=false
+*.sh linguist-detectable=false
+
+tests/cases/* linguist-detectable=false
