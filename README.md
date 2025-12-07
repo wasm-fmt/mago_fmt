@@ -45,9 +45,9 @@ function hello( \$name ) {
 ?>`;
 
 const formatted = format(input, "main.php", {
-  indent_style: "space",
-  indent_width: 4,
-  line_width: 120,
+  use_tabs: false,
+  tab_width: 4,
+  print_width: 120,
 });
 console.log(formatted);
 ```
@@ -66,8 +66,9 @@ function hello( \$name ) {
 ?>`;
 
 const formatted = format_with_version(input, "8.3", "main.php", {
-  indent_style: "space",
-  indent_width: 4,
+  use_tabs: false,
+  tab_width: 4,
+  print_width: 120,
 });
 console.log(formatted);
 ```
