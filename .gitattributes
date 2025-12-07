@@ -4,5 +4,7 @@
 *.ts linguist-detectable=false
 *.mjs linguist-detectable=false
 *.sh linguist-detectable=false
+*.php linguist-detectable=false
+*.inc linguist-detectable=false
 
 tests/cases/* linguist-detectable=false
