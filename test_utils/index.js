@@ -1,4 +1,13 @@
 /**
+ * Convert snake_case to kebab-case.
+ * @param {string} str
+ * @returns {string}
+ */
+function toKebabCase(str) {
+	return str.replace(/_/g, "-");
+}
+
+/**
  * Parse Rust FormatSettings struct from string.
  * @param {string} content
  * @returns {Object}
@@ -9,12 +18,12 @@ export function parseSettings(content) {
 
 	if (openBrace === -1 || closeBrace === -1 || closeBrace <= openBrace) {
 		// https://github.com/carthage-software/mago/pull/713
-		return { empty_line_after_opening_tag: false };
+		return {};
 	}
 
 	const body = content.slice(openBrace + 1, closeBrace);
 	const parts = body.split(",");
-	const json = { empty_line_after_opening_tag: false };
+	const json = {};
 
 	for (const part of parts) {
 		let trimmed = part.trim();
@@ -29,7 +38,7 @@ export function parseSettings(content) {
 		const colonIndex = trimmed.indexOf(":");
 		if (colonIndex === -1) continue;
 
-		const key = trimmed.slice(0, colonIndex).trim();
+		const key = toKebabCase(trimmed.slice(0, colonIndex).trim());
 		let value = trimmed.slice(colonIndex + 1).trim();
 
 		if (!key || !value) continue;

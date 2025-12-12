@@ -2,7 +2,7 @@
 
 $options = $this->multiple ? ($this->search)($query) : [self::CANCEL, self::SEARCH_AGAIN, ...($this->search)($query)];
 
-$this->now = ($now instanceof DateTimeInterface) ? DateTimeImmutable::from($now) : new DateTimeImmutable($now);
+$this->now = $now instanceof DateTimeInterface ? DateTimeImmutable::from($now) : new DateTimeImmutable($now);
 
 function getControls(): array
 {

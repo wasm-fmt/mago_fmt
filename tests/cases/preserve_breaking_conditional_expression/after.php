@@ -4,7 +4,7 @@ $options = $this->multiple
     ? ($this->search)($query)
     : [self::CANCEL, self::SEARCH_AGAIN, ...($this->search)($query)];
 
-$this->now = ($now instanceof DateTimeInterface)
+$this->now = $now instanceof DateTimeInterface
     ? DateTimeImmutable::createFromInterface($now)
     : new DateTimeImmutable($now);
 

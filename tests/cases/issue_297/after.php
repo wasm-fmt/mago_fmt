@@ -1,0 +1,7 @@
+<?php use Thing; ?>
+<?php if (1): ?>
+<?php endif; ?>
+
+<?php use Thing ?>
+<?php if (1): ?>
+<?php endif ?>

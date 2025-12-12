@@ -45,9 +45,9 @@ function hello( \$name ) {
 ?>`;
 
 const formatted = format(input, "main.php", {
-  use_tabs: false,
-  tab_width: 4,
-  print_width: 120,
+  "use-tabs": false,
+  "tab-width": 4,
+  "print-width": 120,
 });
 console.log(formatted);
 ```
@@ -66,9 +66,9 @@ function hello( \$name ) {
 ?>`;
 
 const formatted = format_with_version(input, "8.3", "main.php", {
-  use_tabs: false,
-  tab_width: 4,
-  print_width: 120,
+  "use-tabs": false,
+  "tab-width": 4,
+  "print-width": 120,
 });
 console.log(formatted);
 ```

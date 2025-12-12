@@ -46,7 +46,8 @@ final class Issue164
         ||  
         ', $html);
 
-        $this->assertStringEqualsStringIgnoringLineEndings("
+        $this->assertStringEqualsStringIgnoringLineEndings(
+            "
         ||||||||||||||||||||||||||||||||
                                         
         ||||||||||||||||||||||||        
@@ -58,7 +59,9 @@ final class Issue164
         ||||    
             
         || $tag
-        ", $html);
+        ",
+            $html,
+        );
 
         $message = Str\format(<<<MESSAGE
         Shell command "%s" returned an exit code of "%d".

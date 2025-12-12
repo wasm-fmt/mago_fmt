@@ -1,14 +1,11 @@
-use mago_formatter::Formatter;
-use mago_formatter::settings::FormatSettings;
-use mago_interner::ThreadedInterner;
-use mago_php_version::PHPVersion;
+use std::borrow::Cow;
 use std::str::FromStr;
-use std::thread_local;
-use wasm_bindgen::prelude::*;
 
-thread_local! {
-    static INTERNER: ThreadedInterner = ThreadedInterner::default();
-}
+use bumpalo::Bump;
+use mago_formatter::settings::FormatSettings;
+use mago_formatter::Formatter;
+use mago_php_version::PHPVersion;
+use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 pub fn format(
@@ -32,13 +29,12 @@ pub fn format_internal(
 ) -> Result<String, String> {
     let filename = filename.unwrap_or_else(|| "code.php".to_string());
 
-    INTERNER.with(|interner| {
-        let formatter = Formatter::new(interner, PHPVersion::LATEST, settings);
-        match formatter.format_code(&filename, code) {
-            Ok(output) => Ok(output.to_string()),
-            Err(err) => Err(format!("{:?}", err)),
-        }
-    })
+    let arena = Bump::new();
+    let formatter = Formatter::new(&arena, PHPVersion::LATEST, settings);
+    match formatter.format_code(Cow::Owned(filename), Cow::Owned(code.to_owned())) {
+        Ok(output) => Ok(output.to_string()),
+        Err(err) => Err(format!("{:?}", err)),
+    }
 }
 
 #[wasm_bindgen]
@@ -67,11 +63,10 @@ pub fn format_with_version_internal(
 ) -> Result<String, String> {
     let filename = filename.unwrap_or_else(|| "code.php".to_string());
 
-    INTERNER.with(|interner| {
-        let formatter = Formatter::new(interner, version, settings);
-        match formatter.format_code(&filename, code) {
-            Ok(output) => Ok(output.to_string()),
-            Err(err) => Err(format!("{:?}", err)),
-        }
-    })
+    let arena = Bump::new();
+    let formatter = Formatter::new(&arena, version, settings);
+    match formatter.format_code(Cow::Owned(filename), Cow::Owned(code.to_owned())) {
+        Ok(output) => Ok(output.to_string()),
+        Err(err) => Err(format!("{:?}", err)),
+    }
 }

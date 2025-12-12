@@ -59,11 +59,11 @@ function foo()
 {
     if ($write) {
         $writable =
-            str_contains($meta['mode'], 'x') ||
-            str_contains($meta['mode'], 'w') ||
-            str_contains($meta['mode'], 'c') ||
-            str_contains($meta['mode'], 'a') ||
-            str_contains($meta['mode'], '+');
+            str_contains($meta['mode'], 'x')
+            || str_contains($meta['mode'], 'w')
+            || str_contains($meta['mode'], 'c')
+            || str_contains($meta['mode'], 'a')
+            || str_contains($meta['mode'], '+');
     }
 
     $target_directory = Env\temp_dir() . DIRECTORY_SEPARATOR . 'you-shall-not-pass';
@@ -71,9 +71,9 @@ function foo()
     if (($i + 1) < $binary_length) {
         $byte1 = $chunk[2];
         $dest .=
-            static::encode6Bits($byte0 >> 2) .
-            static::encode6Bits((($byte0 << 4) | ($byte1 >> 4)) & 63) .
-            static::encode6Bits(($byte1 << 2) & 63);
+            static::encode6Bits($byte0 >> 2)
+            . static::encode6Bits((($byte0 << 4) | ($byte1 >> 4)) & 63)
+            . static::encode6Bits(($byte1 << 2) & 63);
     }
 
     $target_file =

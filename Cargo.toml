@@ -11,9 +11,9 @@ repository  = "https://github.com/wasm-fmt/mago_fmt"
 version     = "0.2.0"
 
 [dependencies]
-mago-formatter   = "0.26.1"
-mago-interner    = "0.26.1"
-mago-php-version = "0.26.1"
+bumpalo          = "3"
+mago-formatter   = "1.0.0-rc.12"
+mago-php-version = "1.0.0-rc.12"
 
 serde-wasm-bindgen = "0.6"
 wasm-bindgen       = "0.2"
@@ -30,8 +30,8 @@ wasm-bindgen       = "0.2"
 crate-type = ["cdylib", "rlib"]
 
 [dev-dependencies]
-mago-formatter    = "0.26.1"
-mago-php-version  = "0.26.1"
+mago-formatter    = "1.0.0-rc.12"
+mago-php-version  = "1.0.0-rc.12"
 pretty_assertions = "1"
 
 

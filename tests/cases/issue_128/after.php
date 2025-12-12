@@ -11,5 +11,5 @@ $this->writeln(implode(PHP_EOL, $complete->complete(
 )));
 
 return new ImmutableString($string)
-    ->truncate(($this->maxLineCharacters - 1) - $maxLineOffset, end: '…') // -1 is for the ellipsis
+    ->truncate($this->maxLineCharacters - 1 - $maxLineOffset, end: '…') // -1 is for the ellipsis
     ->toString();

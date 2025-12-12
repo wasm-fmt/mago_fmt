@@ -22,8 +22,8 @@ final class EntityRepository implements EntityRepositoryInterface
                 // this complex condition is needed to avoid issues on PostgreSQL databases
                 if (
                     $propertyConfig['is_small_integer'] && $isSmallIntegerQueryTerm
-                        || $propertyConfig['is_integer'] && $isIntegerQueryTerm
-                        || $propertyConfig['is_numeric'] && $isNumericQueryTerm
+                    || $propertyConfig['is_integer'] && $isIntegerQueryTerm
+                    || $propertyConfig['is_numeric'] && $isNumericQueryTerm
                 ) {
                     // ...
                 }
