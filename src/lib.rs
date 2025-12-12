@@ -2,8 +2,8 @@ use std::borrow::Cow;
 use std::str::FromStr;
 
 use bumpalo::Bump;
-use mago_formatter::settings::FormatSettings;
 use mago_formatter::Formatter;
+use mago_formatter::settings::FormatSettings;
 use mago_php_version::PHPVersion;
 use wasm_bindgen::prelude::*;
 
