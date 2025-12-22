@@ -46,6 +46,10 @@ export function parseSettings(content) {
 		if (value === "true") json[key] = true;
 		else if (value === "false") json[key] = false;
 		else if (!isNaN(Number(value))) json[key] = Number(value);
+		else if(value.startsWith("NullTypeHint::")) {
+			if(value.includes("NullPipe")) json[key] = "null_pipe";
+			else json[key] = "question";
+		}
 		else json[key] = value.replace(/^['"]|['"]$/g, ""); // Remove quotes if present
 	}
 
