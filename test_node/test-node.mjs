@@ -5,9 +5,7 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { parseSettings } from "../test_utils/index.js";
 
-import init, { format, format_with_version } from "../pkg/mago_fmt_node.js";
-
-await init();
+import { format, format_with_version } from "../pkg/mago_fmt_node.js";
 
 const cases_root = fileURLToPath(import.meta.resolve("../tests/cases"));
 

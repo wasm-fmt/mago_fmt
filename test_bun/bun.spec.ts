@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { expect, test } from "bun:test";
 import { parseSettings } from "../test_utils/index.js";
 
-import init, { format, format_with_version } from "../pkg/mago_fmt";
+import init, { format, format_with_version } from "../pkg/mago_fmt_web";
 
 await init();
 
@@ -13,12 +13,7 @@ const cases_root = fileURLToPath(import.meta.resolve("../tests/cases"));
 const entries = await readdir(cases_root, { withFileTypes: true });
 
 for (const entry of entries) {
-	if (
-		!entry.isDirectory() ||
-		entry.name.startsWith(".") ||
-		entry.name.startsWith("-")
-	)
-		continue;
+	if (!entry.isDirectory() || entry.name.startsWith(".") || entry.name.startsWith("-")) continue;
 
 	const case_path = join(cases_root, entry.name);
 
@@ -26,13 +21,12 @@ for (const entry of entries) {
 	const expected_file = Bun.file(join(case_path, "after.php"));
 	const settings_file = Bun.file(join(case_path, "settings.inc")); // May not exist
 
-	if (!(await input_file.exists()) || !(await expected_file.exists()))
-		continue;
+	if (!(await input_file.exists()) || !(await expected_file.exists())) continue;
 
 	const [input, expected, settings] = await Promise.all([
 		input_file.text(),
 		expected_file.text(),
-		settings_file.text().then(parseSettings)
+		settings_file.text().then(parseSettings),
 	]);
 
 	test(entry.name, () => {

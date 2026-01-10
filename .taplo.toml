@@ -1,5 +1,6 @@
 # https://taplo.tamasfe.dev/configuration/formatter-options.html
 [formatting]
 align_entries = true
+exclude       = []
 indent_tables = true
 reorder_keys  = true

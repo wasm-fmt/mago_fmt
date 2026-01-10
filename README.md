@@ -16,10 +16,10 @@ npx jsr add @fmt/mago-fmt
 
 # Usage
 
-```javascript
-import init, { format } from "@wasm-fmt/mago_fmt";
+## Node.js / Deno / Bun / Bundler
 
-await init();
+```javascript
+import { format } from "@wasm-fmt/mago_fmt";
 
 const input = `<?php
 function hello( \$name ) {
@@ -27,14 +27,39 @@ function hello( \$name ) {
 }
 ?>`;
 
-const formatted = format(input);
+const formatted = format(input, "main.php", {
+	"use-tabs": false,
+	"tab-width": 4,
+	"print-width": 120,
+});
 console.log(formatted);
 ```
 
-with custom options:
+With specific PHP version:
 
 ```javascript
-import init, { format } from "@wasm-fmt/mago_fmt";
+import { format_with_version } from "@wasm-fmt/mago_fmt";
+
+const input = `<?php
+function hello( \$name ) {
+    echo "Hello, " . \$name;
+}
+?>`;
+
+const formatted = format_with_version(input, "8.3", "main.php", {
+	"use-tabs": false,
+	"tab-width": 4,
+	"print-width": 120,
+});
+console.log(formatted);
+```
+
+## Web
+
+For web environments, you need to initialize WASM module manually:
+
+```javascript
+import init, { format } from "@wasm-fmt/mago_fmt/web";
 
 await init();
 
@@ -45,67 +70,30 @@ function hello( \$name ) {
 ?>`;
 
 const formatted = format(input, "main.php", {
-  "use-tabs": false,
-  "tab-width": 4,
-  "print-width": 120,
+	"use-tabs": false,
+	"tab-width": 4,
+	"print-width": 120,
 });
 console.log(formatted);
 ```
 
-with specific PHP version:
-
-```javascript
-import init, { format_with_version } from "@wasm-fmt/mago_fmt";
-
-await init();
-
-const input = `<?php
-function hello( \$name ) {
-    echo "Hello, " . \$name;
-}
-?>`;
-
-const formatted = format_with_version(input, "8.3", "main.php", {
-  "use-tabs": false,
-  "tab-width": 4,
-  "print-width": 120,
-});
-console.log(formatted);
-```
-
-For Vite users:
-
-Add `"@wasm-fmt/mago_fmt"` to `optimizeDeps.exclude` in your vite config:
-
-```JSON
-{
-    "optimizeDeps": {
-        "exclude": ["@wasm-fmt/mago_fmt"]
-    }
-}
-```
-
-<details>
-<summary>
-If you cannot change the vite config, you can use another import entry
-
-</summary>
+### Vite
 
 ```JavaScript
 import init, { format } from "@wasm-fmt/mago_fmt/vite";
 
+await init();
 // ...
 ```
 
-</details>
+## Entry Points
 
-# How does it work?
-
-[Mago] is an extremely fast PHP linter, formatter, and static analyzer, written in Rust.
-
-This package is a WebAssembly build of the Mago formatter, with a JavaScript wrapper.
-
-[Mago]: https://github.com/carthage-software/mago
+- `.` - Auto-detects environment (Node.js uses node, Webpack uses bundler, default is ESM)
+- `./node` - Node.js environment (no init required)
+- `./esm` - ESM environments like Deno (no init required)
+- `./bundler` - Bundlers like Webpack (no init required)
+- `./web` - Web browsers (requires manual init)
+- `./vite` - Vite bundler (requires manual init)
 
 # Credits
 

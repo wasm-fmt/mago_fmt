@@ -7,6 +7,7 @@ use mago_formatter::settings::FormatSettings;
 use mago_php_version::PHPVersion;
 use wasm_bindgen::prelude::*;
 
+/// Format PHP code with optional filename and settings.
 #[wasm_bindgen]
 pub fn format(
     code: &str,
@@ -37,6 +38,7 @@ pub fn format_internal(
     }
 }
 
+/// Format PHP code with specified PHP version, optional filename and settings.
 #[wasm_bindgen]
 pub fn format_with_version(
     code: &str,

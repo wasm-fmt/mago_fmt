@@ -2,28 +2,19 @@ import { assertEquals } from "jsr:@std/assert";
 import { fromFileUrl, join } from "jsr:@std/path";
 import { parseSettings } from "../test_utils/index.js";
 
-import init, { format, format_with_version } from "../pkg/mago_fmt.js";
-
-await init();
+import { format, format_with_version } from "../pkg/mago_fmt_esm.js";
 
 const cases_root = fromFileUrl(import.meta.resolve("../tests/cases"));
 
 for await (const entry of Deno.readDir(cases_root)) {
-	if (
-		!entry.isDirectory ||
-		entry.name.startsWith(".") ||
-		entry.name.startsWith("-")
-	)
-		continue;
+	if (!entry.isDirectory || entry.name.startsWith(".") || entry.name.startsWith("-")) continue;
 
 	const case_path = join(cases_root, entry.name);
 
 	const [input, expected, settings] = await Promise.all([
 		Deno.readTextFile(join(case_path, "before.php")),
 		Deno.readTextFile(join(case_path, "after.php")),
-		Deno.readTextFile(join(case_path, "settings.inc")).then(
-			parseSettings,
-		),
+		Deno.readTextFile(join(case_path, "settings.inc")).then(parseSettings),
 	]);
 
 	Deno.test(entry.name, () => {

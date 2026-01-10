@@ -18,22 +18,54 @@ pkg_json.exports = {
 	".": {
 		types: "./mago_fmt.d.ts",
 		node: "./mago_fmt_node.js",
+		webpack: "./mago_fmt.js",
+		default: "./mago_fmt_esm.js",
+	},
+	"./esm": {
+		types: "./mago_fmt.d.ts",
+		default: "./mago_fmt_esm.js",
+	},
+	"./node": {
+		types: "./mago_fmt.d.ts",
+		default: "./mago_fmt_node.js",
+	},
+	"./bundler": {
+		types: "./mago_fmt.d.ts",
 		default: "./mago_fmt.js",
 	},
+	"./web": {
+		types: "./mago_fmt_web.d.ts",
+		default: "./mago_fmt_web.js",
+	},
 	"./vite": {
-		types: "./mago_fmt.d.ts",
+		types: "./mago_fmt_web.d.ts",
 		default: "./mago_fmt_vite.js",
+	},
+	"./wasm": {
+		types: "./mago_fmt_bg.wasm.d.ts",
+		default: "./mago_fmt_bg.wasm",
 	},
 	"./package.json": "./package.json",
 	"./*": "./*",
 };
 
-fs.writeFileSync(pkg_path, JSON.stringify(pkg_json, null, 4));
-
-// JSR
+fs.writeFileSync(pkg_path, JSON.stringify(pkg_json, null, "\t"));
 
 const jsr_path = path.resolve(pkg_path, "..", "jsr.jsonc");
 pkg_json.name = "@fmt/mago-fmt";
-pkg_json.exports = "./mago_fmt.js";
+pkg_json.exports = {
+	".": "./mago_fmt_esm.js",
+	"./esm": "./mago_fmt_esm.js",
+	"./node": "./mago_fmt_node.js",
+	"./bundler": "./mago_fmt.js",
+	"./web": "./mago_fmt_web.js",
+	// jsr does not support imports from wasm?init
+	// "./vite": "./mago_fmt_vite.js",
+	"./wasm": "./mago_fmt_bg.wasm",
+};
 pkg_json.exclude = ["!**", "*.tgz"];
-fs.writeFileSync(jsr_path, JSON.stringify(pkg_json, null, 4));
+fs.writeFileSync(jsr_path, JSON.stringify(pkg_json, null, "\t"));
+
+const mago_fmt_path = path.resolve(path.dirname(pkg_path), "mago_fmt.js");
+let mago_fmt_text = fs.readFileSync(mago_fmt_path, { encoding: "utf-8" });
+fs.writeFileSync(mago_fmt_path, '/* @ts-self-types="./mago_fmt.d.ts" */\n' + mago_fmt_text);
