@@ -5,3 +5,4 @@ justfile -linguist-detectable
 extra/** -linguist-detectable
 scripts/** -linguist-detectable
 test_*/** -linguist-detectable
+tests/** -linguist-detectable
