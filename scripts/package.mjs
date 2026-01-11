@@ -41,10 +41,7 @@ pkg_json.exports = {
 		types: "./mago_fmt_web.d.ts",
 		default: "./mago_fmt_vite.js",
 	},
-	"./wasm": {
-		types: "./mago_fmt_bg.wasm.d.ts",
-		default: "./mago_fmt_bg.wasm",
-	},
+	"./wasm": "./mago_fmt_bg.wasm",
 	"./package.json": "./package.json",
 	"./*": "./*",
 };

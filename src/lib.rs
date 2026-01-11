@@ -7,15 +7,27 @@ use mago_formatter::settings::FormatSettings;
 use mago_php_version::PHPVersion;
 use wasm_bindgen::prelude::*;
 
+#[wasm_bindgen(typescript_custom_section)]
+const TS_Types: &'static str = r#"
+import type { Settings } from "./mago_fmt_settings.d.ts";
+export type { Settings };
+"#;
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(typescript_type = "Settings")]
+    pub type Settings;
+}
+
 /// Format PHP code with optional filename and settings.
 #[wasm_bindgen]
 pub fn format(
-    code: &str,
-    filename: Option<String>,
-    settings: Option<JsValue>,
+    #[wasm_bindgen(param_description = "PHP code to format")] code: &str,
+    #[wasm_bindgen(param_description = "Optional filename for context")] filename: Option<String>,
+    #[wasm_bindgen(param_description = "Optional formatter settings")] settings: Option<Settings>,
 ) -> Result<String, JsValue> {
     let settings = if let Some(settings) = settings {
-        serde_wasm_bindgen::from_value(settings)?
+        serde_wasm_bindgen::from_value(settings.into())?
     } else {
         FormatSettings::default()
     };
@@ -41,13 +53,14 @@ pub fn format_internal(
 /// Format PHP code with specified PHP version, optional filename and settings.
 #[wasm_bindgen]
 pub fn format_with_version(
-    code: &str,
+    #[wasm_bindgen(param_description = "PHP code to format")] code: &str,
+    #[wasm_bindgen(param_description = "PHP version (e.g., '7.4', '8.0', '8.1')")]
     php_version: &str,
-    filename: Option<String>,
-    settings: Option<JsValue>,
+    #[wasm_bindgen(param_description = "Optional filename for context")] filename: Option<String>,
+    #[wasm_bindgen(param_description = "Optional formatter settings")] settings: Option<Settings>,
 ) -> Result<String, JsValue> {
     let settings = if let Some(settings) = settings {
-        serde_wasm_bindgen::from_value(settings)?
+        serde_wasm_bindgen::from_value(settings.into())?
     } else {
         FormatSettings::default()
     };
