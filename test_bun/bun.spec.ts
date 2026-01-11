@@ -1,40 +1,40 @@
-import { readdir } from "node:fs/promises";
-import { join } from "node:path";
-import { fileURLToPath } from "node:url";
+#! /usr/bin/env bun test
+import { Glob } from "bun";
 import { expect, test } from "bun:test";
+import { basename, dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { parseSettings } from "../test_utils/index.js";
 
 import init, { format, format_with_version } from "../pkg/mago_fmt_web";
 
 await init();
 
-const cases_root = fileURLToPath(import.meta.resolve("../tests/cases"));
+const project_root = fileURLToPath(import.meta.resolve("../"));
 
-const entries = await readdir(cases_root, { withFileTypes: true });
+const glob = new Glob("tests/cases/*/before.php");
 
-for (const entry of entries) {
-	if (!entry.isDirectory() || entry.name.startsWith(".") || entry.name.startsWith("-")) continue;
+for await (const relative_path of glob.scan({ cwd: project_root })) {
+	const input_path = join(project_root, relative_path);
+	const case_path = dirname(input_path);
+	const case_name = basename(case_path);
 
-	const case_path = join(cases_root, entry.name);
-
-	const input_file = Bun.file(join(case_path, "before.php"));
-	const expected_file = Bun.file(join(case_path, "after.php"));
-	const settings_file = Bun.file(join(case_path, "settings.inc")); // May not exist
-
-	if (!(await input_file.exists()) || !(await expected_file.exists())) continue;
+	if (case_name.startsWith(".") || case_name.startsWith("-")) {
+		test.skip(case_name, () => {});
+		continue;
+	}
 
 	const [input, expected, settings] = await Promise.all([
-		input_file.text(),
-		expected_file.text(),
-		settings_file.text().then(parseSettings),
+		Bun.file(input_path).text(),
+		Bun.file(join(case_path, "after.php")).text(),
+		Bun.file(join(case_path, "settings.inc")).text().then(parseSettings),
 	]);
 
-	test(entry.name, () => {
+	test(case_name, () => {
 		let actual;
 
-		if (entry.name.startsWith("php83")) {
+		if (case_name.startsWith("php83")) {
 			actual = format_with_version(input, "8.3", "code.php", settings);
-		} else if (entry.name.startsWith("php84")) {
+		} else if (case_name.startsWith("php84")) {
 			actual = format_with_version(input, "8.4", "code.php", settings);
 		} else {
 			actual = format(input, "code.php", settings);
