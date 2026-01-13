@@ -10,7 +10,7 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen(typescript_custom_section)]
 const TS_Types: &'static str = r#"
 import type { Settings } from "./mago_fmt_settings.d.ts";
-export type { Settings };
+export type * from "./mago_fmt_settings.d.ts";
 "#;
 
 #[wasm_bindgen]

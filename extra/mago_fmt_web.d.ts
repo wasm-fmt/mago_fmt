@@ -1,7 +1,42 @@
+/**
+ * WASM formatter for PHP using Mago.
+ * Import this module and call init function before using.
+ *
+ * @example
+ * ```javascript
+ * import init, { format } from "@wasm-fmt/mago_fmt";
+ *
+ * await init();
+ *
+ * const input = `<?php
+ * function hello( \$name ) {
+ *     echo "Hello, " . \$name;
+ * }
+ * ?>`;
+ *
+ * const formatted = format(input, "main.php", {
+ * 	"use-tabs": false,
+ * 	"tab-width": 4,
+ * 	"print-width": 120,
+ * });
+ * console.log(formatted);
+ * ```
+ * @module
+ */
+
 import type * as InitOutput from "./mago_fmt_bg.wasm.d.ts";
 declare type InitOutput = typeof InitOutput;
 
+/**
+ * Input types for asynchronous WASM initialization.
+ * Can be a URL/path to fetch, a Response object, raw bytes, or a pre-compiled WebAssembly.Module.
+ */
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
+
+/**
+ * Input types for synchronous WASM initialization.
+ * Must be raw bytes (BufferSource) or a pre-compiled WebAssembly.Module.
+ */
 export type SyncInitInput = BufferSource | WebAssembly.Module;
 
 /**

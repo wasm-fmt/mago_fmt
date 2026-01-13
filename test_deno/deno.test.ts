@@ -7,9 +7,8 @@ import { parseSettings } from "../test_utils/index.js";
 import { format, format_with_version } from "../pkg/mago_fmt_esm.js";
 
 const project_root = fromFileUrl(import.meta.resolve("../"));
-const glob_pattern = `${project_root}/tests/cases/*/before.php`;
 
-for await (const { path: input_path } of expandGlob(glob_pattern)) {
+for await (const { path: input_path } of expandGlob("tests/cases/*/before.php", { root: project_root })) {
 	const case_path = dirname(input_path);
 	const case_name = basename(case_path);
 

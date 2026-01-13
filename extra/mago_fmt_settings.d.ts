@@ -1,4 +1,5 @@
 /**
+ * Configuration settings for the Mago formatter.
  *  See {@link https://mago.carthage.software/tools/formatter/configuration-reference}
  */
 export interface Settings {
