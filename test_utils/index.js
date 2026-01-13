@@ -10,7 +10,7 @@ function toKebabCase(str) {
 /**
  * Parse Rust FormatSettings struct from string.
  * @param {string} content
- * @returns {Object}
+ * @returns {any}
  */
 export function parseSettings(content) {
 	const openBrace = content.indexOf("{");
@@ -46,9 +46,8 @@ export function parseSettings(content) {
 		if (value === "true") json[key] = true;
 		else if (value === "false") json[key] = false;
 		else if (!isNaN(Number(value))) json[key] = Number(value);
-		else if (value.startsWith("NullTypeHint::")) {
-			if (value.includes("NullPipe")) json[key] = "null_pipe";
-			else json[key] = "question";
+		else if (value.includes("::")) {
+			json[key] = value.split("::").pop().trim();
 		} else json[key] = value.replace(/^['"]|['"]$/g, ""); // Remove quotes if present
 	}
 

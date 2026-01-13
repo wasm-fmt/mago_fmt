@@ -1,8 +1,23 @@
 /**
  * Configuration settings for the Mago formatter.
- *  See {@link https://mago.carthage.software/tools/formatter/configuration-reference}
+ * See {@link https://mago.carthage.software/tools/formatter/configuration-reference}
  */
 export interface Settings {
+	/**
+	 * Formatter preset to use as base configuration.
+	 *
+	 * Individual settings can override the preset values.
+	 * @default "default"
+	 *
+	 * @remarks Available presets:
+	 * - `default` - Default preset (PER-CS compatible)
+	 * - `psr-12` - PSR-12 preset
+	 * - `pint` - Pint preset (Laravel Pint compatible)
+	 * - `tempest` - Tempest preset (Tempest framework compatible)
+	 * - `hack` - Hack preset (`hackfmt` compatible)
+	 */
+	preset?: "default" | "psr-12" | "pint" | "tempest" | "hack";
+
 	/**
 	 * Maximum line length that the printer will wrap on.
 	 * @default 120
@@ -76,6 +91,12 @@ export interface Settings {
 	 * ```
 	 */
 	"control-brace-style"?: "same-line" | "next-line";
+
+	/**
+	 * Whether to place `else`, `elseif`, `catch` and `finally` on a new line.
+	 * @default false
+	 */
+	"following-clause-on-newline"?: boolean;
 
 	/**
 	 * Brace placement for closures.
@@ -962,7 +983,23 @@ export interface Settings {
 	 *
 	 * @remarks Note: if an empty line already exists, it will be preserved regardless of this settings value.
 	 */
-	"empty-line-after-classlike-constant"?: boolean;
+	"empty-line-after-class-like-constant"?: boolean;
+
+	/**
+	 * Whether to add an empty line immediately after a class-like opening brace.
+	 * @default false
+	 *
+	 * @remarks Note: if an empty line already exists, it will be preserved regardless of this settings value.
+	 */
+	"empty-line-after-class-like-open"?: boolean;
+
+	/**
+	 * Whether to insert an empty line before the closing brace of class-like structures when the class body is not empty.
+	 * @default false
+	 *
+	 * When enabled, a blank line will be inserted immediately before the `}` that closes a class, trait, interface or enum, but only if the body contains at least one member.
+	 */
+	"empty-line-before-class-like-close"?: boolean;
 
 	/**
 	 * Whether to add an empty line after enum case.
@@ -1012,5 +1049,24 @@ export interface Settings {
 	 * Whether to separate class-like members of different kinds with a blank line.
 	 * @default true
 	 */
-	"separate-classlike-members"?: boolean;
+	"separate-class-like-members"?: boolean;
+
+	/**
+	 * Whether to indent heredoc/nowdoc content.
+	 * @default true
+	 */
+	"indent-heredoc"?: boolean;
+
+	/**
+	 * Whether to print boolean and null literals in upper-case (e.g. `TRUE`, `FALSE`, `NULL`).
+	 * @default false
+	 *
+	 * When enabled these literals are printed in uppercase; when disabled they are printed in lowercase.
+	 */
+	"uppercase-literal-keyword"?: boolean;
+
+	/**
+	 * See {@link https://mago.carthage.software/tools/formatter/configuration-reference}
+	 */
+	[key: string]: unknown;
 }

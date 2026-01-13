@@ -12,8 +12,9 @@ version     = "0.4.2"
 
 [dependencies]
 bumpalo          = "3"
-mago-formatter   = "1.0.3"
-mago-php-version = "1.0.3"
+mago-formatter   = "1.1.0"
+mago-php-version = "1.1.0"
+serde            = { version = "1", features = ["derive"] }
 
 serde-wasm-bindgen = "0.6"
 wasm-bindgen       = "0.2"
@@ -30,8 +31,8 @@ wasm-bindgen       = "0.2"
 crate-type = ["cdylib", "rlib"]
 
 [dev-dependencies]
-mago-formatter    = "1.0.3"
-mago-php-version  = "1.0.3"
+mago-formatter    = "1.1.0"
+mago-php-version  = "1.1.0"
 pretty_assertions = "1"
 
 

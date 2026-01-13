@@ -3,9 +3,33 @@ use std::str::FromStr;
 
 use bumpalo::Bump;
 use mago_formatter::Formatter;
-use mago_formatter::settings::FormatSettings;
+use mago_formatter::presets::FormatterPreset;
+use mago_formatter::settings::{FormatSettings, merge_format_settings};
 use mago_php_version::PHPVersion;
+use serde::Deserialize;
 use wasm_bindgen::prelude::*;
+
+/// Intermediate struct for deserializing settings with preset support.
+#[derive(Deserialize)]
+struct RawFormatterConfiguration {
+    #[serde(default)]
+    preset: Option<String>,
+    #[serde(flatten)]
+    settings: FormatSettings,
+}
+impl TryFrom<RawFormatterConfiguration> for FormatSettings {
+    type Error = String;
+
+    fn try_from(raw: RawFormatterConfiguration) -> Result<Self, Self::Error> {
+        Ok(if let Some(preset) = raw.preset {
+            // [TODO] https://github.com/carthage-software/mago/pull/879
+            let preset: FormatterPreset = preset.parse()?;
+            merge_format_settings(preset.settings(), raw.settings)
+        } else {
+            raw.settings
+        })
+    }
+}
 
 #[wasm_bindgen(typescript_custom_section)]
 const TS_Types: &'static str = r#"
@@ -27,7 +51,7 @@ pub fn format(
     #[wasm_bindgen(param_description = "Optional formatter settings")] settings: Option<Settings>,
 ) -> Result<String, JsValue> {
     let settings = if let Some(settings) = settings {
-        serde_wasm_bindgen::from_value(settings.into())?
+        serde_wasm_bindgen::from_value::<RawFormatterConfiguration>(settings.into())?.try_into()?
     } else {
         FormatSettings::default()
     };
@@ -60,7 +84,7 @@ pub fn format_with_version(
     #[wasm_bindgen(param_description = "Optional formatter settings")] settings: Option<Settings>,
 ) -> Result<String, JsValue> {
     let settings = if let Some(settings) = settings {
-        serde_wasm_bindgen::from_value(settings.into())?
+        serde_wasm_bindgen::from_value::<RawFormatterConfiguration>(settings.into())?.try_into()?
     } else {
         FormatSettings::default()
     };
