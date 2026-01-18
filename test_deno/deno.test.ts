@@ -1,7 +1,7 @@
 #!/usr/bin/env deno test --allow-read --parallel
 import { assertEquals } from "jsr:@std/assert@1.0.16";
 import { expandGlob } from "jsr:@std/fs@1.0.21";
-import { basename, dirname, fromFileUrl } from "jsr:@std/path@1.1.4";
+import { basename, dirname, fromFileUrl, join } from "jsr:@std/path@1.1.4";
 import { parseSettings } from "../test_utils/index.js";
 
 import { format, format_with_version } from "../pkg/mago_fmt_esm.js";
@@ -13,14 +13,14 @@ for await (const { path: input_path } of expandGlob("tests/cases/*/before.php", 
 	const case_name = basename(case_path);
 
 	if (case_name.startsWith(".") || case_name.startsWith("-")) {
-		Deno.test({ name: case_name, fn: () => {}, ignore: true });
+		Deno.test.ignore(case_name, () => {});
 		continue;
 	}
 
 	const [input, expected, settings] = await Promise.all([
 		Deno.readTextFile(input_path),
-		Deno.readTextFile(`${case_path}/after.php`),
-		Deno.readTextFile(`${case_path}/settings.inc`).then(parseSettings),
+		Deno.readTextFile(join(case_path, "after.php")),
+		Deno.readTextFile(join(case_path, "settings.inc")).then(parseSettings),
 	]);
 
 	Deno.test(case_name, () => {
