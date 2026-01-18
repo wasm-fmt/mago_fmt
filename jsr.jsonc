@@ -1,0 +1,22 @@
+{
+	"$schema": "https://jsr.io/schema/config-file.v1.json",
+	"name": "@fmt/mago-fmt",
+	"version": "0.5.0",
+	"exports": {
+		".": "./mago_fmt.js",
+		"./esm": "./mago_fmt_esm.js",
+		"./node": "./mago_fmt_node.js",
+		"./bundler": "./mago_fmt.js",
+		"./web": "./mago_fmt_web.js"
+	},
+	"publish": {
+		"include": [
+			"mago_fmt_*",
+			"mago_fmt.*",
+			"README.md"
+		],
+		"exclude": [
+			"!*"
+		]
+	}
+}

@@ -1,0 +1,63 @@
+{
+	"name": "@wasm-fmt/mago_fmt",
+	"type": "module",
+	"collaborators": [
+		"magic-akari <akari.ccino@gmail.com>"
+	],
+	"description": "A WASM based PHP Formatter",
+	"version": "0.5.0",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/wasm-fmt/mago_fmt.git"
+	},
+	"homepage": "https://github.com/wasm-fmt/mago_fmt",
+	"sideEffects": [
+		"./mago_fmt.js",
+		"./mago_fmt_node.js",
+		"./mago_fmt_esm.js"
+	],
+	"keywords": [
+		"wasm",
+		"mago",
+		"PHP",
+		"formatter"
+	],
+	"exports": {
+		".": {
+			"types": "./mago_fmt.d.ts",
+			"webpack": "./mago_fmt.js",
+			"deno": "./mago_fmt.js",
+			"bun": "./mago_fmt_node.js",
+			"module-sync": "./mago_fmt_node.js",
+			"node": "./mago_fmt_node.js",
+			"default": "./mago_fmt_esm.js"
+		},
+		"./esm": {
+			"types": "./mago_fmt.d.ts",
+			"default": "./mago_fmt_esm.js"
+		},
+		"./node": {
+			"types": "./mago_fmt.d.ts",
+			"default": "./mago_fmt_node.js"
+		},
+		"./bundler": {
+			"types": "./mago_fmt.d.ts",
+			"default": "./mago_fmt.js"
+		},
+		"./web": {
+			"types": "./mago_fmt_web.d.ts",
+			"default": "./mago_fmt_web.js"
+		},
+		"./vite": {
+			"types": "./mago_fmt_web.d.ts",
+			"default": "./mago_fmt_vite.js"
+		},
+		"./wasm": "./mago_fmt_bg.wasm",
+		"./package.json": "./package.json",
+		"./*": "./*"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
