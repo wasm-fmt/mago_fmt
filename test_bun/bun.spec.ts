@@ -2,14 +2,13 @@
 import { Glob } from "bun";
 import { expect, test } from "bun:test";
 import { basename, dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { parseSettings } from "../test_utils/index.js";
 
 import init, { format, format_with_version } from "../pkg/mago_fmt_web";
 
 await init();
 
-const project_root = fileURLToPath(import.meta.resolve("../"));
+const project_root = Bun.fileURLToPath(import.meta.resolve("../"));
 
 const glob = new Glob("tests/cases/*/before.php");
 

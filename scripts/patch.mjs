@@ -2,9 +2,6 @@
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 
-const mago_fmt_path = fileURLToPath(import.meta.resolve("../pkg/mago_fmt.js"));
-prependTextToFile('/* @ts-self-types="./mago_fmt.d.ts" */\n', mago_fmt_path);
-
 const mago_fmt_d_ts_path = fileURLToPath(import.meta.resolve("../pkg/mago_fmt.d.ts"));
 const doc_text = fs.readFileSync(fileURLToPath(import.meta.resolve("./doc.d.ts")), { encoding: "utf-8" });
 prependTextToFile(doc_text + "\n", mago_fmt_d_ts_path);
