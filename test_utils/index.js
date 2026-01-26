@@ -17,7 +17,6 @@ export function parseSettings(content) {
 	const closeBrace = content.lastIndexOf("}");
 
 	if (openBrace === -1 || closeBrace === -1 || closeBrace <= openBrace) {
-		// https://github.com/carthage-software/mago/pull/713
 		return {};
 	}
 
