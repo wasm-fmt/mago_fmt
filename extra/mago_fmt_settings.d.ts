@@ -730,6 +730,17 @@ export interface Settings {
 	"space-before-hook-parameter-list-parenthesis"?: boolean;
 
 	/**
+	 * Whether to keep abstract property hooks inline.
+	 * @default true
+	 *
+	 * When enabled: `public int $id { get; }`
+	 * When disabled: hook list is always expanded
+	 *
+	 * @remarks PER-CS 4.10 compliant
+	 */
+	"inline-abstract-property-hooks"?: boolean;
+
+	/**
 	 * Whether to add a space before the opening parenthesis in closure use clause.
 	 * @default true
 	 *
