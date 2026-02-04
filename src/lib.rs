@@ -4,7 +4,7 @@ use std::str::FromStr;
 use bumpalo::Bump;
 use mago_formatter::Formatter;
 use mago_formatter::presets::FormatterPreset;
-use mago_formatter::settings::{FormatSettings, merge_format_settings};
+use mago_formatter::settings::{FormatSettings, RawFormatSettings};
 use mago_php_version::PHPVersion;
 use serde::Deserialize;
 use wasm_bindgen::prelude::*;
@@ -15,19 +15,19 @@ struct RawFormatterConfiguration {
     #[serde(default)]
     preset: Option<String>,
     #[serde(flatten)]
-    settings: FormatSettings,
+    settings: RawFormatSettings,
 }
 impl TryFrom<RawFormatterConfiguration> for FormatSettings {
     type Error = String;
 
     fn try_from(raw: RawFormatterConfiguration) -> Result<Self, Self::Error> {
-        Ok(if let Some(preset) = raw.preset {
-            // [TODO] https://github.com/carthage-software/mago/pull/879
-            let preset: FormatterPreset = preset.parse()?;
-            merge_format_settings(preset.settings(), raw.settings)
-        } else {
-            raw.settings
-        })
+        let base = raw
+            .preset
+            .map(|p| p.parse::<FormatterPreset>())
+            .transpose()?
+            .map(|p| p.settings())
+            .unwrap_or_default();
+        Ok(raw.settings.merge_with(base))
     }
 }
 

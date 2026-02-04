@@ -154,6 +154,8 @@ test_case!(preserve_breaking_conditional_expression);
 test_case!(preserve_breaking_conditional_expression_disabled);
 test_case!(preserve_breaking_parameter_list_promoted_properties);
 test_case!(hooks_always_break);
+test_case!(inline_abstract_property_hooks);
+test_case!(do_not_inline_abstract_property_hooks);
 test_case!(comments_are_preserved);
 test_case!(array_comment);
 test_case!(array_preserve_empty_lines);
@@ -248,6 +250,7 @@ test_case!(idempotent_chain_with_array);
 test_case!(match_idempotency);
 test_case!(heredoc_indentation);
 test_case!(heredoc_indentation_disabled);
+test_case!(drupal_preset);
 
 // A special test case for regressions in the Psl codebase
 test_case!(psl_regressions);
@@ -336,6 +339,21 @@ test_case!(issue_812);
 test_case!(issue_813);
 test_case!(issue_816);
 test_case!(issue_825);
+test_case!(issue_926);
+test_case!(issue_897_method_brace_same_line);
+test_case!(issue_897_method_brace_next_line);
+test_case!(issue_897_method_brace_always_next_line);
+test_case!(issue_897_function_brace_same_line);
+test_case!(issue_897_function_brace_next_line);
+test_case!(issue_897_function_brace_always_next_line);
+test_case!(issue_897_closure_brace_same_line);
+test_case!(issue_897_closure_brace_next_line);
+test_case!(issue_897_closure_brace_always_next_line);
+test_case!(issue_897_anonymous_class_brace_same_line);
+test_case!(issue_897_anonymous_class_brace_next_line);
+test_case!(issue_897_anonymous_class_brace_always_next_line);
+test_case!(issue_974);
+test_case!(issue_994);
 
 #[test]
 fn test_all_test_cases_are_ran() {

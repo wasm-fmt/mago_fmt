@@ -13,32 +13,40 @@ function toKebabCase(str) {
  * @returns {any}
  */
 export function parseSettings(content) {
-	const openBrace = content.indexOf("{");
-	const closeBrace = content.lastIndexOf("}");
+	const trimmed = content.trim();
+
+	// Handle preset format: "mago_formatter::presets::FormatterPreset::Drupal.settings()"
+	const presetMatch = trimmed.match(/^mago_formatter::presets::FormatterPreset::(\w+)\.settings\(\)$/);
+	if (presetMatch) {
+		return { preset: presetMatch[1].toLowerCase() };
+	}
+
+	const openBrace = trimmed.indexOf("{");
+	const closeBrace = trimmed.lastIndexOf("}");
 
 	if (openBrace === -1 || closeBrace === -1 || closeBrace <= openBrace) {
 		return {};
 	}
 
-	const body = content.slice(openBrace + 1, closeBrace);
+	const body = trimmed.slice(openBrace + 1, closeBrace);
 	const parts = body.split(",");
 	const json = {};
 
 	for (const part of parts) {
-		let trimmed = part.trim();
+		let partTrimmed = part.trim();
 		// Remove comments
-		const commentIndex = trimmed.indexOf("//");
+		const commentIndex = partTrimmed.indexOf("//");
 		if (commentIndex !== -1) {
-			trimmed = trimmed.slice(0, commentIndex).trim();
+			partTrimmed = partTrimmed.slice(0, commentIndex).trim();
 		}
 
-		if (!trimmed || trimmed.startsWith("..")) continue;
+		if (!partTrimmed || partTrimmed.startsWith("..")) continue;
 
-		const colonIndex = trimmed.indexOf(":");
+		const colonIndex = partTrimmed.indexOf(":");
 		if (colonIndex === -1) continue;
 
-		const key = toKebabCase(trimmed.slice(0, colonIndex).trim());
-		let value = trimmed.slice(colonIndex + 1).trim();
+		const key = toKebabCase(partTrimmed.slice(0, colonIndex).trim());
+		let value = partTrimmed.slice(colonIndex + 1).trim();
 
 		if (!key || !value) continue;
 
