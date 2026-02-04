@@ -169,7 +169,7 @@ export interface Settings {
 
 	/**
 	 * Brace placement for class-like structures (classes, interfaces, traits, enums).
-	 * @default "next-line"
+	 * @default "always-next-line"
 	 *
 	 * @example "same-line"
 	 * ```php
@@ -184,7 +184,7 @@ export interface Settings {
 	 * }
 	 * ```
 	 */
-	"classlike-brace-style"?: "same-line" | "next-line";
+	"classlike-brace-style"?: "same-line" | "next-line" | "always-next-line";
 
 	/**
 	 * Place empty control structure bodies on the same line.
