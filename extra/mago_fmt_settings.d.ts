@@ -38,7 +38,7 @@ export interface Settings {
 
 	/**
 	 * End-of-line characters to use.
-	 * @default "auto"
+	 * @default "lf"
 	 */
 	"end-of-line"?: "auto" | "lf" | "crlf" | "cr";
 
@@ -224,7 +224,7 @@ export interface Settings {
 
 	/**
 	 * Place empty function bodies on the same line.
-	 * @default false
+	 * @default true
 	 *
 	 * @example false
 	 * ```php
@@ -242,7 +242,7 @@ export interface Settings {
 
 	/**
 	 * Place empty method bodies on the same line.
-	 * @default false
+	 * @default true
 	 *
 	 * @example false
 	 * ```php
