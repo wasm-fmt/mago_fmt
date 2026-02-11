@@ -12,11 +12,12 @@ export interface Settings {
 	 * @remarks Available presets:
 	 * - `default` - Default preset (PER-CS compatible)
 	 * - `psr-12` - PSR-12 preset
-	 * - `pint` - Pint preset (Laravel Pint compatible)
-	 * - `tempest` - Tempest preset (Tempest framework compatible)
+	 * - `laravel` / `pint` - Laravel Pint's 'laravel' preset
+	 * - `drupal` - Drupal's coding standard
+	 * - `tempest` - Tempest framework compatible
 	 * - `hack` - Hack preset (`hackfmt` compatible)
 	 */
-	preset?: "default" | "psr-12" | "pint" | "tempest" | "hack";
+	preset?: "default" | "psr-12" | "laravel" | "pint" | "drupal" | "tempest" | "hack";
 
 	/**
 	 * Maximum line length that the printer will wrap on.
@@ -89,8 +90,16 @@ export interface Settings {
 	 *     return 'Hello, world!';
 	 * }
 	 * ```
+	 *
+	 * @example "always-next-line"
+	 * ```php
+	 * if ($expr)
+	 * {
+	 *     return 'Hello, world!';
+	 * }
+	 * ```
 	 */
-	"control-brace-style"?: "same-line" | "next-line";
+	"control-brace-style"?: "same-line" | "next-line" | "always-next-line";
 
 	/**
 	 * Whether to place `else`, `elseif`, `catch` and `finally` on a new line.
@@ -116,8 +125,16 @@ export interface Settings {
 	 *     return 'Hello, world!';
 	 * };
 	 * ```
+	 *
+	 * @example "always-next-line"
+	 * ```php
+	 * $closure = function()
+	 * {
+	 *     return 'Hello, world!';
+	 * };
+	 * ```
 	 */
-	"closure-brace-style"?: "same-line" | "next-line";
+	"closure-brace-style"?: "same-line" | "next-line" | "always-next-line";
 
 	/**
 	 * Brace placement for function declarations.
@@ -137,8 +154,16 @@ export interface Settings {
 	 *     return 'Hello, world!';
 	 * }
 	 * ```
+	 *
+	 * @example "always-next-line"
+	 * ```php
+	 * function foo()
+	 * {
+	 *     return 'Hello, world!';
+	 * }
+	 * ```
 	 */
-	"function-brace-style"?: "same-line" | "next-line";
+	"function-brace-style"?: "same-line" | "next-line" | "always-next-line";
 
 	/**
 	 * Brace placement for method declarations.
@@ -164,8 +189,19 @@ export interface Settings {
 	 *     }
 	 * }
 	 * ```
+	 *
+	 * @example "always-next-line"
+	 * ```php
+	 * class Foo
+	 * {
+	 *     public function bar()
+	 *     {
+	 *         return 'Hello, world!';
+	 *     }
+	 * }
+	 * ```
 	 */
-	"method-brace-style"?: "same-line" | "next-line";
+	"method-brace-style"?: "same-line" | "next-line" | "always-next-line";
 
 	/**
 	 * Brace placement for class-like structures (classes, interfaces, traits, enums).
