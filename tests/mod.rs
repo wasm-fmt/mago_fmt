@@ -251,6 +251,8 @@ test_case!(match_idempotency);
 test_case!(heredoc_indentation);
 test_case!(heredoc_indentation_disabled);
 test_case!(drupal_preset);
+test_case!(redundant_grouping_parens);
+test_case!(null_type_hint_null_pipe_last);
 
 // A special test case for regressions in the Psl codebase
 test_case!(psl_regressions);
@@ -353,8 +355,16 @@ test_case!(issue_897_anonymous_class_brace_same_line);
 test_case!(issue_897_anonymous_class_brace_next_line);
 test_case!(issue_897_anonymous_class_brace_always_next_line);
 test_case!(issue_974);
+test_case!(issue_993_print_width_with_indentation);
 test_case!(issue_994);
 test_case!(issue_978);
+test_case!(issue_1077);
+test_case!(issue_1082);
+test_case!(issue_1091);
+test_case!(issue_1105);
+test_case!(issue_1124);
+test_case!(issue_1135);
+test_case!(issue_1149);
 
 #[test]
 fn test_all_test_cases_are_ran() {
