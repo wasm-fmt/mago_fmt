@@ -12,12 +12,12 @@ export interface Settings {
 	 * @remarks Available presets:
 	 * - `default` - Default preset (PER-CS compatible)
 	 * - `psr-12` - PSR-12 preset
-	 * - `laravel` / `pint` - Laravel Pint's 'laravel' preset
+	 * - `pint` - Laravel Pint's preset (alias: `laravel`)
 	 * - `drupal` - Drupal's coding standard
 	 * - `tempest` - Tempest framework compatible
 	 * - `hack` - Hack preset (`hackfmt` compatible)
 	 */
-	preset?: "default" | "psr-12" | "laravel" | "pint" | "drupal" | "tempest" | "hack";
+	preset?: "default" | "psr-12" | "pint" | "laravel" | "drupal" | "tempest" | "hack";
 
 	/**
 	 * Maximum line length that the printer will wrap on.
@@ -399,6 +399,28 @@ export interface Settings {
 	"first-method-chain-on-new-line"?: boolean;
 
 	/**
+	 * When a method chain breaks across multiple lines, place the semicolon on its own line.
+	 *
+	 * When enabled:
+	 * ```php
+	 * $object->method1()
+	 *     ->method2()
+	 *     ->method3()
+	 * ;
+	 * ```
+	 *
+	 * When disabled:
+	 * ```php
+	 * $object->method1()
+	 *     ->method2()
+	 *     ->method3();
+	 * ```
+	 *
+	 * @default false
+	 */
+	"method-chain-semicolon-on-next-line"?: boolean;
+
+	/**
 	 * Whether to preserve line breaks in method chains, even if they could fit on a single line.
 	 * @default false
 	 */
@@ -643,8 +665,15 @@ export interface Settings {
 	 *     return $bar;
 	 * }
 	 * ```
+	 *
+	 * @example "null-pipe-last"
+	 * ```php
+	 * function foo(string|null $bar) {
+	 *     return $bar;
+	 * }
+	 * ```
 	 */
-	"null-type-hint"?: "null-pipe" | "question";
+	"null-type-hint"?: "null-pipe" | "null-pipe-last" | "question";
 
 	/**
 	 * Whether to include parentheses around `new` when followed by a member access.
