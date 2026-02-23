@@ -12,12 +12,24 @@ export interface Settings {
 	 * @remarks Available presets:
 	 * - `default` - Default preset (PER-CS compatible)
 	 * - `psr-12` - PSR-12 preset
-	 * - `pint` - Laravel Pint's preset (alias: `laravel`)
-	 * - `drupal` - Drupal's coding standard
-	 * - `tempest` - Tempest framework compatible
+	 * - `pint` - Pint preset (Laravel Pint compatible)
+	 * - `tempest` - Tempest preset (Tempest framework compatible)
 	 * - `hack` - Hack preset (`hackfmt` compatible)
+	 * - `drupal` - Drupal preset
 	 */
-	preset?: "default" | "psr-12" | "pint" | "laravel" | "drupal" | "tempest" | "hack";
+	preset?:
+		| "default"
+		| "per-cs"
+		| "psr-12"
+		| "pint"
+		| "laravel-pint"
+		| "laravel"
+		| "tempest"
+		| "tempest-php"
+		| "hack"
+		| "hackfmt"
+		| "hhvm"
+		| "drupal";
 
 	/**
 	 * Maximum line length that the printer will wrap on.
@@ -659,21 +671,21 @@ export interface Settings {
 	 * }
 	 * ```
 	 *
-	 * @example "null-pipe"
+	 * @example "null_pipe"
 	 * ```php
 	 * function foo(null|string $bar) {
 	 *     return $bar;
 	 * }
 	 * ```
 	 *
-	 * @example "null-pipe-last"
+	 * @example "null_pipe_last"
 	 * ```php
 	 * function foo(string|null $bar) {
 	 *     return $bar;
 	 * }
 	 * ```
 	 */
-	"null-type-hint"?: "null-pipe" | "null-pipe-last" | "question";
+	"null-type-hint"?: "null_pipe" | "null_pipe_last" | "question";
 
 	/**
 	 * Whether to include parentheses around `new` when followed by a member access.
