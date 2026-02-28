@@ -325,9 +325,9 @@ checksum = "5e5032e24019045c762d3c0f28f5b6b8bbf38563a65908389bf7978758920897"
 
 [[package]]
 name = "mago-database"
-version = "1.10.0"
+version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "69241b1a1d05543226720cb00cc7fde220977651d7e2dd03ecba0206c530d0c0"
+checksum = "d61ca3fc006128ace27a88bb7bbd882bee5ab681c0ed414b934289234a79fb7d"
 dependencies = [
  "foldhash",
  "glob",
@@ -343,9 +343,9 @@ dependencies = [
 
 [[package]]
 name = "mago-formatter"
-version = "1.10.0"
+version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c5c2ecf8f77ee5ec97a830791bf4643582f679033d55285a7b5adb78fee6f2ea"
+checksum = "c18013435735a4fbbfffe4798140bb12b20d1df59d436dd8686a94df50344d21"
 dependencies = [
  "bumpalo",
  "foldhash",
@@ -355,15 +355,15 @@ dependencies = [
  "mago-syntax",
  "schemars",
  "serde",
- "strum",
+ "strum 0.28.0",
  "unicode-width",
 ]
 
 [[package]]
 name = "mago-php-version"
-version = "1.10.0"
+version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4a16913502e718ad6f9ae2f779fea9082113d5d56fcccab60ea70e66778c150e"
+checksum = "f128e221f57a34f224600041fbe795da70999c697bc92df16c2e0ebf43ae9141"
 dependencies = [
  "schemars",
  "serde",
@@ -371,9 +371,9 @@ dependencies = [
 
 [[package]]
 name = "mago-reporting"
-version = "1.10.0"
+version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b754eac910696788c5182ba89843d6b365fbee6ccf475157c6bd20eae9abe022"
+checksum = "74daa6e89768b28c936901b3c59dc510644ea3997090333da7fe074813b49a5c"
 dependencies = [
  "ariadne",
  "blake3",
@@ -386,15 +386,15 @@ dependencies = [
  "serde",
  "serde-sarif",
  "serde_json",
- "strum",
+ "strum 0.28.0",
  "termcolor",
 ]
 
 [[package]]
 name = "mago-span"
-version = "1.10.0"
+version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d96b0fea5ee40e91d99ca36b11f954c7c5e08a9a85c5fe8a02c5ff41eb3c94ef"
+checksum = "30de23f9cb557429649fae77d148c3521633115ecc9bd0ea6e500490e5d8e8f0"
 dependencies = [
  "mago-database",
  "serde",
@@ -402,9 +402,9 @@ dependencies = [
 
 [[package]]
 name = "mago-syntax"
-version = "1.10.0"
+version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b06c75365ac2f62ede1ef8e7b8b8fbf87d17438abf84656e813611b7eb2ae064"
+checksum = "ba6a0bc48b9af5c8763e13fd7664cc238bfa001dfc36f26b5e22d94ae6857845"
 dependencies = [
  "bumpalo",
  "mago-database",
@@ -416,14 +416,14 @@ dependencies = [
  "ordered-float",
  "paste",
  "serde",
- "strum",
+ "strum 0.28.0",
 ]
 
 [[package]]
 name = "mago-syntax-core"
-version = "1.10.0"
+version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "24c480ad3163399cc437695681650b6cf0f993007fd5485273a982ed799a9233"
+checksum = "83164cadb368803a97922c5fdb62aed2641f70555c0d48b4f97dc9cb13c58ca2"
 dependencies = [
  "bumpalo",
  "mago-database",
@@ -433,12 +433,12 @@ dependencies = [
 
 [[package]]
 name = "mago-text-edit"
-version = "1.10.0"
+version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b404a2fc9a5626e1f17d34b56ae73dc598231eaf55fa294ff285b5613ea5b01f"
+checksum = "b163577ee36bdd98064fa8bd338cb253996256acc895c693702d5c208bbce993"
 dependencies = [
  "serde",
- "strum",
+ "strum 0.28.0",
  "tracing",
 ]
 
@@ -751,8 +751,8 @@ dependencies = [
  "schemafy_lib",
  "serde",
  "serde_json",
- "strum",
- "strum_macros",
+ "strum 0.27.2",
+ "strum_macros 0.27.2",
  "syn 2.0.114",
  "thiserror",
  "typed-builder",
@@ -831,8 +831,14 @@ name = "strum"
 version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "af23d6f6c1a224baef9d3f61e287d2761385a5b88fdab4eb4c6f11aeb54c4bcf"
+
+[[package]]
+name = "strum"
+version = "0.28.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9628de9b8791db39ceda2b119bbe13134770b56c138ec1d3af810d045c04f9bd"
 dependencies = [
- "strum_macros",
+ "strum_macros 0.28.0",
 ]
 
 [[package]]
@@ -840,6 +846,18 @@ name = "strum_macros"
 version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7695ce3845ea4b33927c055a39dc438a45b059f7c1b3d91d38d10355fb8cbca7"
+dependencies = [
+ "heck",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.114",
+]
+
+[[package]]
+name = "strum_macros"
+version = "0.28.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ab85eea0270ee17587ed4156089e10b9e6880ee688791d45a905f5b1ca36f664"
 dependencies = [
  "heck",
  "proc-macro2",
