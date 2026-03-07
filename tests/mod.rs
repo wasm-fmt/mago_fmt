@@ -146,6 +146,8 @@ test_case!(preserve_breaking_argument_list);
 test_case!(preserve_breaking_argument_list_disabled);
 test_case!(preserve_breaking_array_like);
 test_case!(preserve_breaking_array_like_disabled);
+test_case!(preserve_breaking_array_like_expand_last);
+test_case!(preserve_breaking_array_like_method_chain);
 test_case!(preserve_breaking_parameter_list);
 test_case!(preserve_breaking_parameter_list_disabled);
 test_case!(preserve_breaking_attribute_list);
@@ -341,6 +343,7 @@ test_case!(issue_812);
 test_case!(issue_813);
 test_case!(issue_816);
 test_case!(issue_825);
+test_case!(issue_888);
 test_case!(issue_926);
 test_case!(issue_897_method_brace_same_line);
 test_case!(issue_897_method_brace_next_line);
@@ -362,10 +365,15 @@ test_case!(issue_1077);
 test_case!(issue_1082);
 test_case!(issue_1091);
 test_case!(issue_1105);
+test_case!(issue_1115);
 test_case!(issue_1124);
 test_case!(issue_1135);
 test_case!(issue_1149);
 test_case!(issue_1153);
+test_case!(issue_1198);
+test_case!(issue_1221);
+test_case!(issue_1231);
+test_case!(issue_1255);
 
 #[test]
 fn test_all_test_cases_are_ran() {
