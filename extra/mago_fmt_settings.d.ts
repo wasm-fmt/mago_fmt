@@ -492,6 +492,32 @@ export interface Settings {
 	"break-promoted-properties-list"?: boolean;
 
 	/**
+	 * Whether to place parameter attributes on their own line when the parameter list breaks.
+	 * @default true
+	 *
+	 * When enabled, attributes are placed on a separate line
+	 * from the parameter when the parameter list spans multiple lines:
+	 *
+	 * @example true
+	 * ```php
+	 * function foo(
+	 *     #[SensitiveParameter]
+	 *     string $password,
+	 * ) {}
+	 * ```
+	 *
+	 * @example false
+	 * ```php
+	 * function foo(
+	 *     #[SensitiveParameter] string $password,
+	 * ) {}
+	 * ```
+	 *
+	 * @remarks PER-CS 12.2 compliant
+	 */
+	"parameter-attribute-on-new-line"?: boolean;
+
+	/**
 	 * Whether to add a line before binary operators or after when breaking.
 	 * @default true
 	 *
@@ -1016,6 +1042,26 @@ export interface Settings {
 	 * @remarks Note: if an empty line already exists, it will be preserved regardless of this settings value.
 	 */
 	"empty-line-after-control-structure"?: boolean;
+
+	/**
+	 * Whether the opening `<?php` tag must be on its own line with no other statements.
+	 * @default true
+	 *
+	 * When enabled, a newline is always inserted after the opening tag, even if
+	 * the original source has statements on the same line (PER-CS compliant).
+	 *
+	 * @example true
+	 * ```php
+	 * <?php
+	 * echo "Hello";
+	 * ```
+	 *
+	 * @example false
+	 * ```php
+	 * <?php echo "Hello";
+	 * ```
+	 */
+	"opening-tag-on-own-line"?: boolean;
 
 	/**
 	 * Whether to add an empty line after opening tag.
