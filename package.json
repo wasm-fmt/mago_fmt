@@ -5,7 +5,7 @@
 		"magic-akari <akari.ccino@gmail.com>"
 	],
 	"description": "A WASM based PHP Formatter",
-	"version": "0.6.8",
+	"version": "0.6.9",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
