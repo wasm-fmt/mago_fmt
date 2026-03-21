@@ -97,6 +97,7 @@ test_case!(inline_html);
 test_case!(inline_php);
 test_case!(inline_html_alignment);
 test_case!(inline_echo);
+test_case!(inline_php_closing_tag_idempotency);
 test_case!(parameter_attributes);
 test_case!(parameter_attribute_on_new_line);
 test_case!(parameter_attribute_on_new_line_disabled);
@@ -264,6 +265,7 @@ test_case!(heredoc_indentation_disabled);
 test_case!(drupal_preset);
 test_case!(redundant_grouping_parens);
 test_case!(null_type_hint_null_pipe_last);
+test_case!(comment_placement_binary);
 
 // A special test case for regressions in the Psl codebase
 test_case!(psl_regressions);
@@ -351,6 +353,7 @@ test_case!(issue_796);
 test_case!(issue_812);
 test_case!(issue_813);
 test_case!(issue_816);
+test_case!(issue_817);
 test_case!(issue_825);
 test_case!(issue_888);
 test_case!(issue_926);
@@ -383,6 +386,9 @@ test_case!(issue_1198);
 test_case!(issue_1221);
 test_case!(issue_1231);
 test_case!(issue_1255);
+test_case!(issue_1350);
+test_case!(issue_1460);
+test_case!(bare_cr_line_endings);
 
 #[test]
 fn test_all_test_cases_are_ran() {
