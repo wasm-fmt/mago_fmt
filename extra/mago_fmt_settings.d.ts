@@ -469,6 +469,15 @@ export interface Settings {
 	"preserve-breaking-conditional-expression"?: boolean;
 
 	/**
+	 * Whether to preserve line breaks in condition expressions (if, elseif, while, do-while, switch, match).
+	 *
+	 * When enabled, if the original source has conditions broken across multiple lines,
+	 * the formatter maintains that layout using PER Coding Style 3.0 rules.
+	 * @default false
+	 */
+	"preserve-breaking-condition-expression"?: boolean;
+
+	/**
 	 * Whether to break a parameter list with one or more promoted properties into multiple lines.
 	 * @default true
 	 *
@@ -536,6 +545,27 @@ export interface Settings {
 	 * @remarks Note: If the right side has a leading comment, this setting is always false.
 	 */
 	"line-before-binary-operator"?: boolean;
+
+	/**
+	 * Whether to indent continuation lines of binary expressions.
+	 *
+	 * When enabled, if a binary expression breaks across lines, the continuation
+	 * is indented relative to the start of the expression:
+	 * @default false
+	 *
+	 * @example true
+	 * ```php
+	 * $emailNotifications = $this->stringUtils->splitStringToArray($jobPosting->getVacancyEmailNotification())
+	 *     ?? [];
+	 * ```
+	 *
+	 * @example false
+	 * ```php
+	 * $emailNotifications = $this->stringUtils->splitStringToArray($jobPosting->getVacancyEmailNotification())
+	 * ?? [];
+	 * ```
+	 */
+	"indent-binary-expression-continuation"?: boolean;
 
 	/**
 	 * Whether to always break named argument lists into multiple lines.
