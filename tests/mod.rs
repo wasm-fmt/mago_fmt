@@ -1,5 +1,6 @@
 use mago_formatter::settings::BraceStyle;
 use mago_formatter::settings::FormatSettings;
+use mago_formatter::settings::MethodChainBreakingStyle;
 use mago_formatter::settings::NullTypeHint;
 use mago_php_version::PHPVersion;
 use std::fs;
@@ -75,6 +76,10 @@ test_case!(logical_operations_within_parens);
 test_case!(simple_binaryish_operators);
 test_case!(multiple_concat_operations_in_array);
 test_case!(binary_operand_needs_parens);
+test_case!(binary_precedence_parens_noise);
+test_case!(binary_precedence_parens_noise_disabled);
+test_case!(bitwise_precedence_parens_noise);
+test_case!(bitwise_precedence_parens_noise_disabled);
 test_case!(binary_ops_wrapping);
 test_case!(parens_around_constructs);
 test_case!(interpolated_strings_vars);
@@ -144,11 +149,20 @@ test_case!(shebang);
 test_case!(arrow_return);
 test_case!(match_breaking);
 test_case!(array_alignment);
+test_case!(align_parameters);
+test_case!(align_parameters_comment_marker_false_positive);
+test_case!(align_parameters_default_off);
+test_case!(align_named_arguments);
+test_case!(align_named_arguments_default_off);
 test_case!(binary_alignment);
 test_case!(binary_alignment_before_op);
 test_case!(chain_comments);
 test_case!(literal_concat_parens);
+test_case!(method_chain_semicolon_group_scope);
+test_case!(method_chain_semicolon_group_scope_same_line_first_break);
 test_case!(preserve_breaking_member_access_chain);
+test_case!(preserve_breaking_member_access_chain_same_line_first_break);
+test_case!(preserve_breaking_member_access_chain_same_line_first_break_opt_in);
 test_case!(preserve_breaking_member_access_chain_disabled);
 test_case!(preserve_breaking_argument_list);
 test_case!(preserve_breaking_argument_list_disabled);
@@ -267,6 +281,8 @@ test_case!(heredoc_indentation);
 test_case!(heredoc_indentation_disabled);
 test_case!(drupal_preset);
 test_case!(redundant_grouping_parens);
+test_case!(preserve_logical_grouping_parens);
+test_case!(preserve_logical_grouping_parens_disabled);
 test_case!(null_type_hint_null_pipe_last);
 test_case!(comment_placement_binary);
 test_case!(comment_placement_conditional);
@@ -396,6 +412,9 @@ test_case!(issue_1350);
 test_case!(issue_1451);
 test_case!(issue_1460);
 test_case!(issue_1513);
+test_case!(issue_1623);
+test_case!(issue_1623_within_width);
+test_case!(member_access_chain_keeps_breaks_with_comments);
 test_case!(issue_1562);
 test_case!(bare_cr_line_endings);
 
@@ -417,9 +436,8 @@ fn test_all_test_cases_are_ran() {
         }
 
         assert!(
-            test_case_file.contains(&format!("test_case!({}", file_name)),
-            "Directory '{}' was not found as a test case",
-            file_name
+            test_case_file.contains(&format!("test_case!({file_name}")),
+            "Directory '{file_name}' was not found as a test case"
         );
     }
 }
