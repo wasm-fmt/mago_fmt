@@ -51,7 +51,7 @@ export interface Settings {
 
 	/**
 	 * End-of-line characters to use.
-	 * @default "lf"
+	 * @default "auto"
 	 */
 	"end-of-line"?: "auto" | "lf" | "crlf" | "cr";
 
@@ -439,6 +439,31 @@ export interface Settings {
 	"preserve-breaking-member-access-chain"?: boolean;
 
 	/**
+	 * When preserving a broken object method chain, keep the first method call on the same line as the receiver.
+	 *
+	 * This only affects already-broken chains preserved by
+	 * `"preserve-breaking-member-access-chain"`, and does not change the default
+	 * breaking style for newly broken chains.
+	 * @default false
+	 *
+	 * @example true
+	 * ```php
+	 * $object->method1()
+	 *     ->method2()
+	 *     ->method3();
+	 * ```
+	 *
+	 * @example false
+	 * ```php
+	 * $object
+	 *     ->method1()
+	 *     ->method2()
+	 *     ->method3();
+	 * ```
+	 */
+	"preserve-breaking-member-access-chain-first-method-on-same-line"?: boolean;
+
+	/**
 	 * Whether to preserve line breaks in argument lists, even if they could fit on a single line.
 	 * @default false
 	 */
@@ -568,6 +593,61 @@ export interface Settings {
 	"indent-binary-expression-continuation"?: boolean;
 
 	/**
+	 * Whether to omit redundant parentheses around arithmetic binary expressions under comparison and null coalesce expressions.
+	 * @default false
+	 *
+	 * @example true
+	 * ```php
+	 * if ($i === $retries - 1) {
+	 * }
+	 * ```
+	 *
+	 * @example false
+	 * ```php
+	 * if ($i === ($retries - 1)) {
+	 * }
+	 * ```
+	 */
+	"omit-redundant-arithmetic-binary-expression-parentheses"?: boolean;
+
+	/**
+	 * Whether to omit redundant parentheses around bitwise binary child expressions.
+	 * @default false
+	 *
+	 * @example true
+	 * ```php
+	 * if ($mask === $flags << 1) {
+	 * }
+	 * ```
+	 *
+	 * @example false
+	 * ```php
+	 * if ($mask === ($flags << 1)) {
+	 * }
+	 * ```
+	 */
+	"omit-redundant-bitwise-binary-expression-parentheses"?: boolean;
+
+	/**
+	 * Whether to preserve author-written parentheses around logical binary sub-expressions
+	 * even when PHP's operator precedence makes them redundant.
+	 * @default false
+	 *
+	 * @example true
+	 * ```php
+	 * if (($var1 > 200 && $var2 < 1) || ($var1 <= 200 && $var2 < 3)) {
+	 * }
+	 * ```
+	 *
+	 * @example false
+	 * ```php
+	 * if ($var1 > 200 && $var2 < 1 || $var1 <= 200 && $var2 < 3) {
+	 * }
+	 * ```
+	 */
+	"preserve-redundant-logical-binary-expression-parentheses"?: boolean;
+
+	/**
 	 * Whether to always break named argument lists into multiple lines.
 	 * @default false
 	 *
@@ -595,6 +675,29 @@ export interface Settings {
 	 * ```
 	 */
 	"always-break-attribute-named-argument-lists"?: boolean;
+
+	/**
+	 * Whether to align named arguments in multiline argument lists.
+	 * @default false
+	 *
+	 * @example true
+	 * ```php
+	 * some_function(
+	 *     short:       1,
+	 *     longerName:  2,
+	 *     longestName: 3,
+	 * );
+	 * ```
+	 */
+	"align-named-arguments"?: boolean;
+
+	/**
+	 * Whether to align multiline function and method parameter lists by the variable column.
+	 *
+	 * This is especially useful for promoted constructor properties with visibility modifiers.
+	 * @default false
+	 */
+	"align-parameters"?: boolean;
 
 	/**
 	 * Whether to use table-style alignment for arrays.
