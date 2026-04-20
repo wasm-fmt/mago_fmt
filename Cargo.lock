@@ -445,7 +445,7 @@ dependencies = [
 
 [[package]]
 name = "mago_fmt"
-version = "0.10.0"
+version = "0.10.1"
 dependencies = [
  "bumpalo",
  "mago-formatter",
