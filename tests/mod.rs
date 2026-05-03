@@ -418,9 +418,34 @@ test_case!(issue_1513);
 test_case!(issue_1623);
 test_case!(issue_1623_within_width);
 test_case!(issue_1672);
+test_case!(issue_1744);
 test_case!(member_access_chain_keeps_breaks_with_comments);
 test_case!(issue_1562);
 test_case!(bare_cr_line_endings);
+
+// Idempotency regressions found by the corpus smoke test.
+test_case!(idempotency_keyed_array_value_call);
+test_case!(idempotency_keyed_array_value_nested_array);
+test_case!(idempotency_arrow_fn_returns_keyed_array_with_call);
+test_case!(idempotency_anon_class_with_leading_docblock);
+test_case!(idempotency_null_coalesce_chain_new_expr);
+test_case!(idempotency_comment_before_call_args);
+test_case!(idempotency_mixed_breaking_logical_chain);
+test_case!(idempotency_docblock_before_parameter);
+test_case!(idempotency_html_echo_ternary_break);
+
+// Full-file idempotency fixtures sourced from the corpus. When a corpus
+// file stops being idempotent, copy it here so the formatter test suite
+// captures the regression directly and we can iterate without touching
+// the corpus tree.
+test_case!(idempotency_corpus_numeric_comparator);
+test_case!(idempotency_corpus_carbon_period);
+test_case!(idempotency_corpus_symfony_trace_html);
+test_case!(idempotency_corpus_nette_factory);
+test_case!(idempotency_corpus_phparkitect_arch_rule);
+test_case!(idempotency_corpus_apiplatform_schema_property);
+test_case!(idempotency_corpus_apiplatform_type_factory);
+test_case!(idempotency_corpus_symfony_json_streamer);
 
 #[test]
 fn test_all_test_cases_are_ran() {
