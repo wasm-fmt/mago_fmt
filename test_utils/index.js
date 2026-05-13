@@ -8,6 +8,18 @@ function toKebabCase(str) {
 }
 
 /**
+ * Convert Rust enum variant casing to kebab-case for wasm-facing settings values.
+ * @param {string} str
+ * @returns {string}
+ */
+function toEnumKebabCase(str) {
+	return str
+		.replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+		.replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+		.toLowerCase();
+}
+
+/**
  * Parse Rust FormatSettings struct from string.
  * @param {string} content
  * @returns {any}
@@ -54,7 +66,8 @@ export function parseSettings(content) {
 		else if (value === "false") json[key] = false;
 		else if (!isNaN(Number(value))) json[key] = Number(value);
 		else if (value.includes("::")) {
-			json[key] = value.split("::").pop().trim();
+			const enumValue = value.split("::").pop().trim();
+			json[key] = key === "attributes-order" ? toEnumKebabCase(enumValue) : enumValue;
 		} else json[key] = value.replace(/^['"]|['"]$/g, ""); // Remove quotes if present
 	}
 

@@ -2,6 +2,7 @@ use mago_formatter::settings::BraceStyle;
 use mago_formatter::settings::FormatSettings;
 use mago_formatter::settings::MethodChainBreakingStyle;
 use mago_formatter::settings::NullTypeHint;
+use mago_formatter::settings::SortOrder;
 use mago_php_version::PHPVersion;
 use std::fs;
 
@@ -50,6 +51,9 @@ macro_rules! test_case {
 
 // Test cases
 test_case!(leading_comment_with_missing_prefix);
+test_case!(docblock_before_function_declaration);
+test_case!(inline_single_breaking_value_argument);
+test_case!(inline_single_breaking_value_argument_default_off);
 test_case!(dangling_block_comments);
 test_case!(opening_tag_trailing_comments);
 test_case!(opening_tag_on_own_line);
@@ -132,6 +136,16 @@ test_case!(parens);
 test_case!(use_typed_use_list_expanded);
 test_case!(use_nested_namespace_expanded);
 test_case!(adds_empty_line_after_use);
+test_case!(separate_trait_use);
+test_case!(separate_trait_use_disabled);
+test_case!(separate_trait_use_with_adaptations);
+test_case!(attributes_order_alpha_asc);
+test_case!(attributes_order_alpha_desc);
+test_case!(attributes_order_length_asc);
+test_case!(attributes_order_length_desc);
+test_case!(attributes_order_preserve);
+test_case!(separate_attributes);
+test_case!(attributes_order_with_separation);
 test_case!(leaves_single_empty_line_after_use);
 test_case!(nesting_wrap);
 test_case!(nesting_wrap_wide);
@@ -419,6 +433,8 @@ test_case!(issue_1623);
 test_case!(issue_1623_within_width);
 test_case!(issue_1672);
 test_case!(issue_1744);
+test_case!(issue_1806);
+test_case!(issue_1808);
 test_case!(member_access_chain_keeps_breaks_with_comments);
 test_case!(issue_1562);
 test_case!(bare_cr_line_endings);
