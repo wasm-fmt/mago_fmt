@@ -1319,6 +1319,36 @@ export interface Settings {
 	"separate-class-like-members"?: boolean;
 
 	/**
+	 * How to order `#[Attribute]` annotations on a declaration.
+	 * @default "preserve"
+	 */
+	"attributes-order"?:
+		| "preserve"
+		| "alphanumeric-ascending"
+		| "alphanumeric-descending"
+		| "length-ascending"
+		| "length-descending";
+
+	/**
+	 * Whether to split a single `#[Attr1, Attr2]` group into separate
+	 * `#[Attr1]` `#[Attr2]` lines.
+	 * @default false
+	 */
+	"separate-attributes"?: boolean;
+
+	/**
+	 * Whether to split a single `use` trait statement that imports multiple traits
+	 * (`use FirstTrait, SecondTrait;`) into one `use` statement per trait, as required
+	 * by PSR-12 / PER-CS-3 section 4.2.
+	 *
+	 * Only abstract trait-use forms (those terminated with `;`, with no `{ ... }`
+	 * adaptation block) are split. Compound declarations with adaptations are left
+	 * untouched because the adaptations may reference any of the imported traits.
+	 * @default true
+	 */
+	"separate-trait-use"?: boolean;
+
+	/**
 	 * Whether to indent heredoc/nowdoc content.
 	 * @default true
 	 */
