@@ -68,10 +68,8 @@ pub fn format_internal(
 
     let arena = Bump::new();
     let formatter = Formatter::new(&arena, PHPVersion::LATEST, settings);
-    match formatter.format_code(Cow::Owned(filename), Cow::Owned(code.to_owned())) {
-        Ok(output) => Ok(output.to_string()),
-        Err(err) => Err(format!("{:?}", err)),
-    }
+
+    format_code_to_string(&formatter, filename, code)
 }
 
 /// Format PHP code with specified PHP version, optional filename and settings.
@@ -104,8 +102,19 @@ pub fn format_with_version_internal(
 
     let arena = Bump::new();
     let formatter = Formatter::new(&arena, version, settings);
-    match formatter.format_code(Cow::Owned(filename), Cow::Owned(code.to_owned())) {
-        Ok(output) => Ok(output.to_string()),
+
+    format_code_to_string(&formatter, filename, code)
+}
+
+fn format_code_to_string(
+    formatter: &Formatter<'_>,
+    filename: String,
+    code: &str,
+) -> Result<String, String> {
+    match formatter
+        .format_code(Cow::Owned(filename.into_bytes()), Cow::Owned(code.as_bytes().to_vec()))
+    {
+        Ok(output) => std::str::from_utf8(output).map(str::to_owned).map_err(|err| err.to_string()),
         Err(err) => Err(format!("{:?}", err)),
     }
 }

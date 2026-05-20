@@ -1,10 +1,17 @@
+use bumpalo::Bump;
+use mago_formatter::Formatter;
 use mago_formatter::settings::BraceStyle;
 use mago_formatter::settings::FormatSettings;
 use mago_formatter::settings::MethodChainBreakingStyle;
 use mago_formatter::settings::NullTypeHint;
 use mago_formatter::settings::SortOrder;
 use mago_php_version::PHPVersion;
+use std::borrow::Cow;
 use std::fs;
+
+fn fixture_as_str(bytes: &[u8]) -> Option<&str> {
+    std::str::from_utf8(bytes).ok()
+}
 
 #[macro_export]
 macro_rules! test_case {
@@ -14,37 +21,68 @@ macro_rules! test_case {
     ($name:ident, $version:expr) => {
         #[test]
         pub fn $name() {
-            let code = include_str!(concat!("cases/", stringify!($name), "/before.php"));
-            let expected = include_str!(concat!("cases/", stringify!($name), "/after.php"));
+            let code = include_bytes!(concat!("cases/", stringify!($name), "/before.php"));
+            let expected = include_bytes!(concat!("cases/", stringify!($name), "/after.php"));
             let settings = include!(concat!("cases/", stringify!($name), "/settings.inc"));
 
-            let formatted_code = mago_fmt::format_with_version_internal(
-                code,
-                $version,
-                Some("code.php".to_string()),
-                settings.clone(),
-            )
-            .unwrap();
+            match (fixture_as_str(code), fixture_as_str(expected)) {
+                (Some(code), Some(expected)) => {
+                    let formatted_code = mago_fmt::format_with_version_internal(
+                        code,
+                        $version,
+                        Some("code.php".to_string()),
+                        settings.clone(),
+                    )
+                    .unwrap();
 
-            pretty_assertions::assert_eq!(
-                expected,
-                formatted_code,
-                "Formatted code does not match expected"
-            );
+                    pretty_assertions::assert_eq!(
+                        expected,
+                        formatted_code,
+                        "Formatted code does not match expected"
+                    );
 
-            let reformatted_code = mago_fmt::format_with_version_internal(
-                &formatted_code,
-                $version,
-                Some("formatted_code.php".to_string()),
-                settings,
-            )
-            .unwrap();
+                    let reformatted_code = mago_fmt::format_with_version_internal(
+                        &formatted_code,
+                        $version,
+                        Some("formatted_code.php".to_string()),
+                        settings,
+                    )
+                    .unwrap();
 
-            pretty_assertions::assert_eq!(
-                expected,
-                reformatted_code,
-                "Reformatted code does not match expected"
-            );
+                    pretty_assertions::assert_eq!(
+                        expected,
+                        reformatted_code,
+                        "Reformatted code does not match expected"
+                    );
+                }
+                _ => {
+                    let arena = Bump::new();
+                    let formatter = Formatter::new(&arena, $version, settings);
+
+                    let formatted_code = formatter
+                        .format_code(Cow::Borrowed(b"code.php"), Cow::Borrowed(code))
+                        .unwrap();
+
+                    pretty_assertions::assert_eq!(
+                        expected,
+                        formatted_code,
+                        "Formatted code does not match expected"
+                    );
+
+                    let reformatted_code = formatter
+                        .format_code(
+                            Cow::Borrowed(b"formatted_code.php"),
+                            Cow::Owned(formatted_code.to_vec()),
+                        )
+                        .unwrap();
+
+                    pretty_assertions::assert_eq!(
+                        expected,
+                        reformatted_code,
+                        "Reformatted code does not match expected"
+                    );
+                }
+            }
         }
     };
 }
