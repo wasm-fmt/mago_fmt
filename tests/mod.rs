@@ -477,6 +477,10 @@ test_case!(member_access_chain_keeps_breaks_with_comments);
 test_case!(issue_1562);
 test_case!(bare_cr_line_endings);
 
+// PHP identifiers may contain non-UTF-8 bytes; the formatter must round-trip
+// `before.php`/`after.php` byte-for-byte without lossy decoding.
+test_case!(non_utf8_identifiers);
+
 // Idempotency regressions found by the corpus smoke test.
 test_case!(idempotency_keyed_array_value_call);
 test_case!(idempotency_keyed_array_value_nested_array);
@@ -487,6 +491,9 @@ test_case!(idempotency_comment_before_call_args);
 test_case!(idempotency_mixed_breaking_logical_chain);
 test_case!(idempotency_docblock_before_parameter);
 test_case!(idempotency_html_echo_ternary_break);
+test_case!(idempotency_inline_echo_mid_line_call);
+test_case!(idempotency_inline_echo_mid_line_ternary);
+test_case!(idempotency_inline_echo_multi_break_mid_line);
 
 // Full-file idempotency fixtures sourced from the corpus. When a corpus
 // file stops being idempotent, copy it here so the formatter test suite
