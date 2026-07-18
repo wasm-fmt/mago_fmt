@@ -65,7 +65,12 @@ export function parseSettings(content) {
 		if (value === "true") json[key] = true;
 		else if (value === "false") json[key] = false;
 		else if (!isNaN(Number(value))) json[key] = Number(value);
-		else if (value.includes("::")) {
+		else if (key === "sort-uses" && value === "SortUses::default()") {
+			json[key] = true;
+		} else if (key === "sort-uses") {
+			const sortOrderMatch = value.match(/^SortUses\(SortOrder::(\w+)\)$/);
+			json[key] = sortOrderMatch ? toEnumKebabCase(sortOrderMatch[1]) : value;
+		} else if (value.includes("::")) {
 			const enumValue = value.split("::").pop().trim();
 			json[key] = key === "attributes-order" ? toEnumKebabCase(enumValue) : enumValue;
 		} else json[key] = value.replace(/^['"]|['"]$/g, ""); // Remove quotes if present
