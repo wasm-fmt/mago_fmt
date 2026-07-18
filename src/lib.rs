@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 use std::str::FromStr;
 
-use bumpalo::Bump;
+use mago_allocator::LocalArena;
 use mago_formatter::Formatter;
 use mago_formatter::presets::FormatterPreset;
 use mago_formatter::settings::{FormatSettings, RawFormatSettings};
@@ -66,7 +66,7 @@ pub fn format_internal(
 ) -> Result<String, String> {
     let filename = filename.unwrap_or_else(|| "code.php".to_string());
 
-    let arena = Bump::new();
+    let arena = LocalArena::new();
     let formatter = Formatter::new(&arena, PHPVersion::LATEST, settings);
 
     format_code_to_string(&formatter, filename, code)
@@ -100,14 +100,14 @@ pub fn format_with_version_internal(
 ) -> Result<String, String> {
     let filename = filename.unwrap_or_else(|| "code.php".to_string());
 
-    let arena = Bump::new();
+    let arena = LocalArena::new();
     let formatter = Formatter::new(&arena, version, settings);
 
     format_code_to_string(&formatter, filename, code)
 }
 
 fn format_code_to_string(
-    formatter: &Formatter<'_>,
+    formatter: &Formatter<'_, LocalArena>,
     filename: String,
     code: &str,
 ) -> Result<String, String> {

@@ -369,6 +369,7 @@ dependencies = [
  "mago-syntax",
  "memchr",
  "schemars",
+ "serde",
  "unicode-width",
 ]
 
@@ -450,7 +451,7 @@ checksum = "c321af313d7a0123806384510027a5bf1b9665bb48c66733a99c115bf0c12f02"
 name = "mago_fmt"
 version = "0.10.7"
 dependencies = [
- "bumpalo",
+ "mago-allocator",
  "mago-formatter",
  "mago-php-version",
  "pretty_assertions",

@@ -1,10 +1,11 @@
-use bumpalo::Bump;
+use mago_allocator::LocalArena;
 use mago_formatter::Formatter;
 use mago_formatter::settings::BraceStyle;
 use mago_formatter::settings::FormatSettings;
 use mago_formatter::settings::MethodChainBreakingStyle;
 use mago_formatter::settings::NullTypeHint;
 use mago_formatter::settings::SortOrder;
+use mago_formatter::settings::SortUses;
 use mago_php_version::PHPVersion;
 use std::borrow::Cow;
 use std::fs;
@@ -56,7 +57,7 @@ macro_rules! test_case {
                     );
                 }
                 _ => {
-                    let arena = Bump::new();
+                    let arena = LocalArena::new();
                     let formatter = Formatter::new(&arena, $version, settings);
 
                     let formatted_code = formatter
