@@ -8,7 +8,7 @@ license     = "MIT"
 name        = "mago_fmt"
 readme      = "README.md"
 repository  = "https://github.com/wasm-fmt/mago_fmt"
-version     = "0.10.7"
+version     = "1.44.0"
 
 [dependencies]
 mago-allocator   = "1.43.0"

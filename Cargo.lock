@@ -449,7 +449,7 @@ checksum = "f8bb9669ec9648489c7388578067fc243f035277072d7351f8489b73c40b7b12"
 
 [[package]]
 name = "mago_fmt"
-version = "0.10.7"
+version = "1.44.0"
 dependencies = [
  "mago-allocator",
  "mago-formatter",
