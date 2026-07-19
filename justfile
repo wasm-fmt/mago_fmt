@@ -65,6 +65,8 @@ ready:
 # Bump version (major, minor, patch) or set specific version
 version bump_or_version:
 	#!/usr/bin/env bash
+	set -euo pipefail
+
 	if [[ "{{bump_or_version}}" =~ ^(major|minor|patch)$ ]]; then
 		cargo set-version --bump "{{bump_or_version}}"
 	else
@@ -77,4 +79,3 @@ version bump_or_version:
 	git add -A
 	git commit -m "${VERSION}"
 	git tag -a "v${VERSION}" -m "${VERSION}"
-
