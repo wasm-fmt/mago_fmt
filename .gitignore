@@ -1,2 +1,4 @@
 /target
+/pkg
+/node_modules
 deno.lock

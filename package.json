@@ -6,7 +6,7 @@
 	],
 	"description": "A WASM based PHP Formatter",
 	"version": "1.44.0",
-	"license": "MIT",
+	"license": "MIT OR Apache-2.0",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/wasm-fmt/mago_fmt.git"
@@ -23,6 +23,15 @@
 		"PHP",
 		"formatter"
 	],
+	"dependencies": {
+		"@wasm-fmt/runtime": "0.0.1"
+	},
+	"devDependencies": {
+		"@wasm-fmt/bindgen": "0.0.1"
+	},
+	"scripts": {
+		"build:bindings": "wasm-fmt-bindgen"
+	},
 	"exports": {
 		".": {
 			"types": "./mago_fmt.d.ts",
@@ -50,7 +59,7 @@
 			"default": "./mago_fmt_web.js"
 		},
 		"./vite": {
-			"types": "./mago_fmt_web.d.ts",
+			"types": "./mago_fmt_vite.d.ts",
 			"default": "./mago_fmt_vite.js"
 		},
 		"./wasm": "./mago_fmt_bg.wasm",
@@ -59,5 +68,9 @@
 	},
 	"publishConfig": {
 		"access": "public"
+	},
+	"author": "magic-akari <akari.ccino@gmail.com>",
+	"bugs": {
+		"url": "https://github.com/wasm-fmt/mago_fmt/issues"
 	}
 }

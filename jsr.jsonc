@@ -13,10 +13,13 @@
 		"include": [
 			"mago_fmt_*",
 			"mago_fmt.*",
-			"README.md"
+			"README.md",
+			"LICENSE-MIT",
+			"LICENSE-APACHE"
 		],
 		"exclude": [
 			"!*"
 		]
-	}
+	},
+	"license": "MIT OR Apache-2.0"
 }

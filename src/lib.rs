@@ -7,16 +7,29 @@ use mago_formatter::presets::FormatterPreset;
 use mago_formatter::settings::{FormatSettings, RawFormatSettings};
 use mago_php_version::PHPVersion;
 use serde::Deserialize;
-use wasm_bindgen::prelude::*;
 
 /// Intermediate struct for deserializing settings with preset support.
-#[derive(Deserialize)]
+#[bridge::config]
+#[derive(Clone, Default, Deserialize)]
 struct RawFormatterConfiguration {
+    #[serde(default, rename = "__wasmFmtPhpVersion")]
+    php_version: Option<String>,
     #[serde(default)]
     preset: Option<String>,
     #[serde(flatten)]
     settings: RawFormatSettings,
 }
+
+impl bridge::Config for RawFormatterConfiguration {
+    fn decode(bytes: &[u8]) -> Result<Self, String> {
+        if bytes.is_empty() {
+            return Ok(Self::default());
+        }
+
+        serde_json::from_slice(bytes).map_err(|error| error.to_string())
+    }
+}
+
 impl TryFrom<RawFormatterConfiguration> for FormatSettings {
     type Error = String;
 
@@ -31,32 +44,23 @@ impl TryFrom<RawFormatterConfiguration> for FormatSettings {
     }
 }
 
-#[wasm_bindgen(typescript_custom_section)]
-const TS_Types: &'static str = r#"
-import type { Settings } from "./mago_fmt_settings.d.ts";
-export type * from "./mago_fmt_settings.d.ts";
-"#;
-
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(typescript_type = "Settings")]
-    pub type Settings;
-}
-
 /// Format PHP code with optional filename and settings.
-#[wasm_bindgen]
-pub fn format(
-    #[wasm_bindgen(param_description = "PHP code to format")] code: &str,
-    #[wasm_bindgen(param_description = "Optional filename for context")] filename: Option<String>,
-    #[wasm_bindgen(param_description = "Optional formatter settings")] settings: Option<Settings>,
-) -> Result<String, JsValue> {
-    let settings = if let Some(settings) = settings {
-        serde_wasm_bindgen::from_value::<RawFormatterConfiguration>(settings.into())?.try_into()?
-    } else {
-        FormatSettings::default()
-    };
+#[bridge::formatter]
+fn format(
+    source: &str,
+    filename: Option<&str>,
+    config: &RawFormatterConfiguration,
+) -> Result<String, String> {
+    let version = config
+        .php_version
+        .as_deref()
+        .map(PHPVersion::from_str)
+        .transpose()
+        .map_err(|error| error.to_string())?
+        .unwrap_or(PHPVersion::LATEST);
+    let settings = config.clone().try_into()?;
 
-    format_internal(code, filename, settings).map_err(JsValue::from)
+    format_with_version_internal(source, version, filename.map(str::to_owned), settings)
 }
 
 pub fn format_internal(
@@ -70,26 +74,6 @@ pub fn format_internal(
     let formatter = Formatter::new(&arena, PHPVersion::LATEST, settings);
 
     format_code_to_string(&formatter, filename, code)
-}
-
-/// Format PHP code with specified PHP version, optional filename and settings.
-#[wasm_bindgen]
-pub fn format_with_version(
-    #[wasm_bindgen(param_description = "PHP code to format")] code: &str,
-    #[wasm_bindgen(param_description = "PHP version (e.g., '7.4', '8.0', '8.1')")]
-    php_version: &str,
-    #[wasm_bindgen(param_description = "Optional filename for context")] filename: Option<String>,
-    #[wasm_bindgen(param_description = "Optional formatter settings")] settings: Option<Settings>,
-) -> Result<String, JsValue> {
-    let settings = if let Some(settings) = settings {
-        serde_wasm_bindgen::from_value::<RawFormatterConfiguration>(settings.into())?.try_into()?
-    } else {
-        FormatSettings::default()
-    };
-
-    let version = PHPVersion::from_str(php_version).map_err(|e| e.to_string())?;
-
-    format_with_version_internal(code, version, filename, settings).map_err(JsValue::from)
 }
 
 pub fn format_with_version_internal(

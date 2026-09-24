@@ -6,7 +6,7 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { parseSettings } from "../test_utils/index.js";
 
-import { format, format_with_version } from "../pkg/mago_fmt_node.js";
+import { createConfig, format, format_with_version, releaseConfig } from "../pkg/mago_fmt_node.js";
 
 const project_root = fileURLToPath(import.meta.resolve("../"));
 
@@ -39,3 +39,18 @@ for await (const input_path of glob("tests/cases/**/before.php", {
 		assert.equal(actual, expected);
 	});
 }
+
+test("registered config handle", () => {
+	const source = '<?php function hello( $name ) { echo "Hello, " . $name; }';
+	const settings = { "print-width": 120 };
+	const config = createConfig(settings);
+	try {
+		assert.equal(format(source, "code.php", config), format(source, "code.php", settings));
+	} finally {
+		releaseConfig(config);
+	}
+});
+
+test("invalid JSON config is rejected during registration", () => {
+	assert.throws(() => createConfig("{"), /EOF while parsing an object/);
+});
