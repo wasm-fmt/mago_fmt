@@ -1,4 +1,22 @@
 /**
+ * Select the fixture's PHP version, matching tests/mod.rs (PHP 8.4 by default).
+ * @param {string} caseName
+ * @returns {string}
+ */
+export function getPhpVersion(caseName) {
+	if (caseName === "comment_placement_grouping_parens") {
+		return "8.5";
+	}
+
+	const match = /^php(\d)(\d)_/.exec(caseName);
+	if (match) {
+		return `${match[1]}.${match[2]}`;
+	}
+
+	return "8.4";
+}
+
+/**
  * Convert snake_case to kebab-case.
  * @param {string} str
  * @returns {string}

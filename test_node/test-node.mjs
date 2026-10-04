@@ -4,7 +4,7 @@ import { glob, readFile } from "node:fs/promises";
 import { dirname, join, basename } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
-import { parseSettings } from "../test_utils/index.js";
+import { getPhpVersion, parseSettings } from "../test_utils/index.js";
 
 import { createConfig, format, format_with_version, releaseConfig } from "../pkg/mago_fmt_node.js";
 
@@ -20,6 +20,7 @@ for await (const input_path of glob("tests/cases/**/before.php", {
 		test.skip(case_name, () => {});
 		continue;
 	}
+	const php_version = getPhpVersion(case_name);
 
 	const [input, expected, settings] = await Promise.all([
 		readFile(input_path, "utf-8"),
@@ -28,14 +29,7 @@ for await (const input_path of glob("tests/cases/**/before.php", {
 	]);
 
 	test(case_name, () => {
-		let actual;
-		if (case_name.startsWith("php83")) {
-			actual = format_with_version(input, "8.3", "code.php", settings);
-		} else if (case_name.startsWith("php84")) {
-			actual = format_with_version(input, "8.4", "code.php", settings);
-		} else {
-			actual = format(input, "code.php", settings);
-		}
+		const actual = format_with_version(input, php_version, "code.php", settings);
 		assert.equal(actual, expected);
 	});
 }

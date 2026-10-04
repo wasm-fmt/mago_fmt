@@ -2,9 +2,9 @@
 import { Glob } from "bun";
 import { expect, test } from "bun:test";
 import { basename, dirname, join } from "node:path";
-import { parseSettings } from "../test_utils/index.js";
+import { getPhpVersion, parseSettings } from "../test_utils/index.js";
 
-import init, { format, format_with_version } from "../pkg/mago_fmt_web";
+import init, { format_with_version } from "../pkg/mago_fmt_web";
 
 await init();
 
@@ -21,6 +21,7 @@ for await (const relative_path of glob.scan({ cwd: project_root })) {
 		test.skip(case_name, () => {});
 		continue;
 	}
+	const php_version = getPhpVersion(case_name);
 
 	const [input, expected, settings] = await Promise.all([
 		Bun.file(input_path).text(),
@@ -29,15 +30,7 @@ for await (const relative_path of glob.scan({ cwd: project_root })) {
 	]);
 
 	test(case_name, () => {
-		let actual;
-
-		if (case_name.startsWith("php83")) {
-			actual = format_with_version(input, "8.3", "code.php", settings);
-		} else if (case_name.startsWith("php84")) {
-			actual = format_with_version(input, "8.4", "code.php", settings);
-		} else {
-			actual = format(input, "code.php", settings);
-		}
+		const actual = format_with_version(input, php_version, "code.php", settings);
 		expect(actual).toBe(expected);
 	});
 }

@@ -2,9 +2,9 @@
 import { assertEquals } from "jsr:@std/assert@1.0.16";
 import { expandGlob } from "jsr:@std/fs@1.0.21";
 import { basename, dirname, fromFileUrl, join } from "jsr:@std/path@1.1.4";
-import { parseSettings } from "../test_utils/index.js";
+import { getPhpVersion, parseSettings } from "../test_utils/index.js";
 
-import { format, format_with_version } from "../pkg/mago_fmt_esm.js";
+import { format_with_version } from "../pkg/mago_fmt_esm.js";
 
 const project_root = fromFileUrl(import.meta.resolve("../"));
 
@@ -16,6 +16,7 @@ for await (const { path: input_path } of expandGlob("tests/cases/*/before.php", 
 		Deno.test.ignore(case_name, () => {});
 		continue;
 	}
+	const php_version = getPhpVersion(case_name);
 
 	const [input, expected, settings] = await Promise.all([
 		Deno.readTextFile(input_path),
@@ -24,14 +25,7 @@ for await (const { path: input_path } of expandGlob("tests/cases/*/before.php", 
 	]);
 
 	Deno.test(case_name, () => {
-		let actual;
-		if (case_name.startsWith("php83")) {
-			actual = format_with_version(input, "8.3", "code.php", settings);
-		} else if (case_name.startsWith("php84")) {
-			actual = format_with_version(input, "8.4", "code.php", settings);
-		} else {
-			actual = format(input, "code.php", settings);
-		}
+		const actual = format_with_version(input, php_version, "code.php", settings);
 		assertEquals(actual, expected);
 	});
 }
