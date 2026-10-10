@@ -8,6 +8,15 @@
 			"groupName": "mago dependencies",
 			"matchManagers": ["cargo"],
 			"matchPackageNames": ["mago-*"]
+		},
+		{
+			"matchPackageNames": [
+				"@wasm-fmt/**",
+				"wasm-fmt-*",
+				"github.com/wasm-fmt/**"
+			],
+			"groupName": "wasm-fmt",
+			"separateMajorMinor": false
 		}
 	]
 }
