@@ -11,7 +11,7 @@ repository  = "https://github.com/wasm-fmt/mago_fmt"
 version     = "1.44.0"
 
 [dependencies]
-bridge          = { package = "wasm-fmt-fdk", version = "=0.0.1" }
+bridge          = { package = "wasm-fmt-fdk", version = "=0.1.0" }
 mago-allocator   = "1.43.0"
 mago-formatter   = { version = "1.43.0", features = ["serde"] }
 mago-php-version = "1.43.0"
